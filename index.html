@@ -81,20 +81,22 @@
               <input type="text" id="search-name" placeholder="e.g. Blue-Eyes, Metamorphosis..." class="w-full bg-white border-2 border-black px-4 py-3 font-medium text-sm focus:outline-none placeholder:text-gray-400" />
             </div>
 
-            <div>
-              <label for="search-type" class="block font-mono text-[10px] font-black uppercase tracking-wider text-gray-500 mb-2">CLASSIFICATION</label>
-              <select id="search-type" class="w-full bg-white border-2 border-black px-4 py-3 font-bold text-sm focus:outline-none appearance-none cursor-pointer">
-                <option value="">ALL CLASSIFICATIONS</option>
-                <option value="Normal Monster">NORMAL MONSTER</option>
-                <option value="Effect Monster">EFFECT MONSTER</option>
-                <option value="Spell Card">SPELL CARD</option>
-                <option value="Trap Card">TRAP CARD</option>
-                <option value="Fusion Monster">FUSION MONSTER</option>
-                <option value="Synchro Monster">SYNCHRO MONSTER</option>
-                <option value="XYZ Monster">XYZ MONSTER</option>
-                <option value="Ritual Monster">RITUAL MONSTER</option>
-                <option value="Token">TOKEN</option>
-              </select>
+            <div class="flex flex-col gap-3">
+              <div>
+                <label for="search-category" class="block font-mono text-[10px] font-black uppercase tracking-wider text-gray-500 mb-2">CATEGORY</label>
+                <select id="search-category" class="w-full bg-white border-2 border-black px-4 py-3 font-bold text-sm focus:outline-none appearance-none cursor-pointer">
+                  <option value="">ALL</option>
+                  <option value="Monster">MONSTER</option>
+                  <option value="Spell">SPELL</option>
+                  <option value="Trap">TRAP</option>
+                </select>
+              </div>
+              <div id="subtype-row" class="hidden">
+                <label for="search-subtype" class="block font-mono text-[10px] font-black uppercase tracking-wider text-gray-500 mb-2">TYPE</label>
+                <select id="search-subtype" class="w-full bg-white border-2 border-black px-4 py-3 font-bold text-sm focus:outline-none appearance-none cursor-pointer">
+                  <option value="">ALL</option>
+                </select>
+              </div>
             </div>
 
             <div class="grid grid-cols-2 gap-4">
@@ -160,29 +162,29 @@
               </label>
             </div>
 
-            <div>
-              <span class="block font-mono text-[10px] font-black uppercase tracking-wider text-gray-500 mb-2">ELEMENTAL ATTRIBUTES</span>
-              <div class="grid grid-cols-4 gap-2">
-                <button class="attr-btn px-2 py-2 border-2 border-black text-center font-bold font-mono text-[10px] uppercase hover:bg-black hover:text-white transition-colors cursor-pointer" data-attr="LIGHT">LIGHT</button>
-                <button class="attr-btn px-2 py-2 border-2 border-black text-center font-bold font-mono text-[10px] uppercase hover:bg-black hover:text-white transition-colors cursor-pointer" data-attr="DARK">DARK</button>
-                <button class="attr-btn px-2 py-2 border-2 border-black text-center font-bold font-mono text-[10px] uppercase hover:bg-black hover:text-white transition-colors cursor-pointer" data-attr="EARTH">EARTH</button>
-                <button class="attr-btn px-2 py-2 border-2 border-black text-center font-bold font-mono text-[10px] uppercase hover:bg-black hover:text-white transition-colors cursor-pointer" data-attr="WATER">WATER</button>
-                <button class="attr-btn px-2 py-2 border-2 border-black text-center font-bold font-mono text-[10px] uppercase hover:bg-black hover:text-white transition-colors cursor-pointer" data-attr="FIRE">FIRE</button>
-                <button class="attr-btn px-2 py-2 border-2 border-black text-center font-bold font-mono text-[10px] uppercase hover:bg-black hover:text-white transition-colors cursor-pointer" data-attr="WIND">WIND</button>
-                <button class="attr-btn px-2 py-2 border-2 border-black text-center font-bold font-mono text-[10px] uppercase hover:bg-black hover:text-white transition-colors cursor-pointer" data-attr="SPELL">SPELL</button>
-                <button class="attr-btn px-2 py-2 border-2 border-black text-center font-bold font-mono text-[10px] uppercase hover:bg-black hover:text-white transition-colors cursor-pointer" data-attr="TRAP">TRAP</button>
-              </div>
+            <div id="attribute-row" class="hidden">
+              <label for="search-attribute" class="block font-mono text-[10px] font-black uppercase tracking-wider text-gray-500 mb-2">ATTRIBUTE</label>
+              <select id="search-attribute" class="w-full bg-white border-2 border-black px-4 py-3 font-bold text-sm focus:outline-none appearance-none cursor-pointer">
+                <option value="">ALL</option>
+                <option value="EARTH">EARTH</option>
+                <option value="WATER">WATER</option>
+                <option value="FIRE">FIRE</option>
+                <option value="WIND">WIND</option>
+                <option value="LIGHT">LIGHT</option>
+                <option value="DARK">DARK</option>
+                <option value="DIVINE">DIVINE</option>
+              </select>
             </div>
 
             <div class="border-t-2 border-black pt-4 mt-2">
               <span class="block font-mono text-[10px] font-black uppercase tracking-wider text-gray-500 mb-3">NUMERICAL BOUNDS</span>
               <div class="grid grid-cols-2 gap-4 mb-3">
                 <div>
-                  <label for="search-min-level" class="block text-[9px] font-mono text-gray-500 uppercase tracking-wider mb-1">MIN STARS</label>
+                  <label for="search-min-level" class="block text-[9px] font-mono text-gray-500 uppercase tracking-wider mb-1">MIN LVL/RANK/LINK</label>
                   <input type="number" id="search-min-level" placeholder="1" min="1" max="12" class="w-full bg-white border-2 border-black p-2 font-mono text-xs text-center" />
                 </div>
                 <div>
-                  <label for="search-max-level" class="block text-[9px] font-mono text-gray-500 uppercase tracking-wider mb-1">MAX STARS</label>
+                  <label for="search-max-level" class="block text-[9px] font-mono text-gray-500 uppercase tracking-wider mb-1">MAX LVL/RANK/LINK</label>
                   <input type="number" id="search-max-level" placeholder="12" min="1" max="12" class="w-full bg-white border-2 border-black p-2 font-mono text-xs text-center" />
                 </div>
               </div>
@@ -966,7 +968,7 @@
       const limit = 12;
 
       let activeFilters = {
-        name: "", type: "", attribute: "", text: "",
+        name: "", category: "", subtype: "", attribute: "", text: "",
         minLevel: "", maxLevel: "", minAtk: "", maxAtk: "", minDef: "", maxDef: "",
         minPoints: "", maxPoints: "", pointedOnly: false,
         sortBy: "name", sortOrder: "asc", isAdvancedEnabled: false,
@@ -986,7 +988,9 @@
 
       const inputName = document.getElementById("search-name");
       const inputText = document.getElementById("search-desc");
-      const selectType = document.getElementById("search-type");
+      const selectCategory = document.getElementById("search-category");
+      const selectSubtype = document.getElementById("search-subtype");
+      const selectAttribute = document.getElementById("search-attribute");
       const selectSortBy = document.getElementById("sort-by");
       const selectSortOrder = document.getElementById("sort-order");
       const checkboxPointed = document.getElementById("search-pointed-only");
@@ -1029,58 +1033,153 @@
         return val;
       }
 
+      // ── IndexedDB helpers ──────────────────────────────────────────────────
+      const DB_NAME    = "GenesysCardDB";
+      const DB_VERSION = 2;
+      const STORE_NAME = "cardCache";
+      const CACHE_KEY  = "allCards";
+      const META_KEY   = "cacheMeta";
+
+      function openDB() {
+        return new Promise((resolve, reject) => {
+          const req = indexedDB.open(DB_NAME, DB_VERSION);
+          req.onupgradeneeded = e => {
+            const db = e.target.result;
+            if (!db.objectStoreNames.contains(STORE_NAME)) {
+              db.createObjectStore(STORE_NAME);
+            }
+          };
+          req.onsuccess = e => resolve(e.target.result);
+          req.onerror   = e => reject(e.target.error);
+        });
+      }
+
+      function idbGet(db, key) {
+        return new Promise((resolve, reject) => {
+          const tx  = db.transaction(STORE_NAME, "readonly");
+          const req = tx.objectStore(STORE_NAME).get(key);
+          req.onsuccess = e => resolve(e.target.result);
+          req.onerror   = e => reject(e.target.error);
+        });
+      }
+
+      function idbPut(db, key, value) {
+        return new Promise((resolve, reject) => {
+          const tx  = db.transaction(STORE_NAME, "readwrite");
+          const req = tx.objectStore(STORE_NAME).put(value, key);
+          req.onsuccess = () => resolve();
+          req.onerror   = e  => reject(e.target.error);
+        });
+      }
+      // ──────────────────────────────────────────────────────────────────────
+
+      function processRawCards(remoteCards) {
+        return remoteCards.map(c => {
+          const rawName = c.name;
+          const norm    = normalizeName(rawName);
+          let points    = GENESYS_POINTS_DICT[norm] || 0;
+          if (points === 0) {
+            for (const [key, val] of Object.entries(GENESYS_POINTS_DICT)) {
+              if (key.toLowerCase() === norm.toLowerCase()) { points = val; break; }
+            }
+          }
+          return {
+            id:         Number(c.id),
+            name:       rawName,
+            type:       c.type,
+            frameType:  c.frameType || "",
+            desc:       c.desc || c.description || "",
+            atk:        c.atk   !== undefined ? Number(c.atk)   : 0,
+            def:        c.def   !== undefined ? Number(c.def)   : 0,
+            level:      c.level !== undefined ? Number(c.level) : 0,
+            race:       c.race  || "N/A",
+            attribute:  c.attribute || (c.type.toLowerCase().includes("spell") ? "SPELL" : c.type.toLowerCase().includes("trap") ? "TRAP" : "SPELL"),
+            image_url:  c.card_images && c.card_images[0] ? (c.card_images[0].image_url_cropped || c.card_images[0].image_url) : "",
+            points
+          };
+        });
+      }
+
+      function updateCacheStats(pool, fromCache, cacheDate) {
+        const total   = pool.length;
+        const pointed = pool.filter(c => c.points > 0).length;
+        if (fromCache && cacheDate) {
+          const d = new Date(cacheDate);
+          const dateStr = d.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
+          cacheStatsEl.innerHTML = `DATABASE: ${total.toLocaleString()} CARDS (${pointed} POINTED) · CACHED ${dateStr.toUpperCase()}`;
+        } else {
+          cacheStatsEl.innerHTML = `DATABASE: ${total.toLocaleString()} CARDS (${pointed} POINTED)`;
+        }
+      }
+
       async function init() {
         setupEventListeners();
-        await loadDatabase();
+        await loadDatabase(false);
         fetchCards();
       }
 
-      async function loadDatabase() {
+      // forceSync = true  → always hit the API (SYNC DATABASE button)
+      // forceSync = false → use IndexedDB cache if available, otherwise fetch
+      async function loadDatabase(forceSync = false) {
         if (searchLoader) searchLoader.classList.remove("hidden");
-        
+
+        let db;
+        try { db = await openDB(); } catch (e) { console.warn("IndexedDB unavailable", e); }
+
+        // Try reading from cache first (unless forced sync)
+        if (!forceSync && db) {
+          try {
+            const cached = await idbGet(db, CACHE_KEY);
+            const meta   = await idbGet(db, META_KEY);
+            if (cached && Array.isArray(cached) && cached.length > 0) {
+              allCardsPool = cached;
+              updateCacheStats(allCardsPool, true, meta?.savedAt);
+              if (searchLoader) searchLoader.classList.add("hidden");
+              return; // ← done, no network request
+            }
+          } catch (e) { console.warn("Cache read failed", e); }
+        }
+
+        // Fetch from API
+        cacheStatsEl.innerHTML = `DATABASE: SYNCING DATA ONLINE...`;
         try {
           const res = await fetch("https://db.ygoprodeck.com/api/v7/cardinfo.php");
           if (!res.ok) throw new Error("API unreachable");
-          const json = await res.json();
+          const json        = await res.json();
           const remoteCards = json.data || [];
 
-          allCardsPool = remoteCards.map(c => {
-            const rawName = c.name;
-            const norm = normalizeName(rawName);
-            let points = GENESYS_POINTS_DICT[norm] || 0;
-            
-            // Fuzzy reverse lookup for minor name variants
-            if (points === 0) {
-              for (const [key, val] of Object.entries(GENESYS_POINTS_DICT)) {
-                if (key.toLowerCase() === norm.toLowerCase()) {
-                  points = val;
-                  break;
-                }
-              }
-            }
+          allCardsPool = processRawCards(remoteCards);
 
-            return {
-              id: Number(c.id),
-              name: rawName,
-              type: c.type,
-              desc: c.desc || c.description || "",
-              atk: c.atk !== undefined ? Number(c.atk) : 0,
-              def: c.def !== undefined ? Number(c.def) : 0,
-              level: c.level !== undefined ? Number(c.level) : 0,
-              race: c.race || "N/A",
-              attribute: c.attribute || (c.type.toLowerCase().includes("spell") ? "SPELL" : c.type.toLowerCase().includes("trap") ? "TRAP" : "SPELL"),
-              image_url: c.card_images && c.card_images[0] ? (c.card_images[0].image_url_cropped || c.card_images[0].image_url) : "",
-              points: points
-            };
-          });
+          // Persist to IndexedDB
+          if (db) {
+            try {
+              await idbPut(db, CACHE_KEY, allCardsPool);
+              await idbPut(db, META_KEY,  { savedAt: Date.now() });
+            } catch (e) { console.warn("Cache write failed", e); }
+          }
 
-          const total = allCardsPool.length;
-          const pointed = allCardsPool.filter(c => c.points > 0).length;
-          cacheStatsEl.innerHTML = `DATABASE: ${total.toLocaleString()} CARDS (${pointed} POINTED)`;
+          updateCacheStats(allCardsPool, false, null);
 
         } catch (e) {
-          console.error("Local load fail", e);
-          cacheStatsEl.innerHTML = `DATABASE: OFFLINE fallback`;
+          console.error("Network load failed", e);
+
+          // Try falling back to stale cache on network error
+          if (db) {
+            try {
+              const cached = await idbGet(db, CACHE_KEY);
+              const meta   = await idbGet(db, META_KEY);
+              if (cached && cached.length > 0) {
+                allCardsPool = cached;
+                updateCacheStats(allCardsPool, true, meta?.savedAt);
+                cacheStatsEl.innerHTML += " · OFFLINE (STALE CACHE)";
+                if (searchLoader) searchLoader.classList.add("hidden");
+                return;
+              }
+            } catch (_) {}
+          }
+
+          // Absolute fallback
+          cacheStatsEl.innerHTML = `DATABASE: OFFLINE — NO CACHE`;
           allCardsPool = [
             { id: 89631139, name: "Blue-Eyes White Dragon", type: "Normal Monster", desc: "This legendary dragon is powerful...", atk: 3000, def: 2500, level: 8, race: "Dragon", attribute: "LIGHT", image_url: "", points: 0 },
             { id: 33396948, name: "Exodia the Forbidden One", type: "Effect Monster", desc: "Wins standard game.", atk: 1000, def: 1000, level: 3, race: "Spellcaster", attribute: "DARK", image_url: "", points: 30 }
@@ -1100,10 +1199,33 @@
           const q = activeFilters.name.toLowerCase();
           filtered = filtered.filter(c => normalizeName(c.name).toLowerCase().includes(q));
         }
-        if (activeFilters.type) {
-          filtered = filtered.filter(c => c.type.toLowerCase().includes(activeFilters.type.toLowerCase()));
+
+        // Category filter: Monster / Spell / Trap
+        if (activeFilters.category === "Monster") {
+          filtered = filtered.filter(c => !c.type.toLowerCase().includes("spell") && !c.type.toLowerCase().includes("trap"));
+        } else if (activeFilters.category === "Spell") {
+          filtered = filtered.filter(c => c.type.toLowerCase().includes("spell"));
+        } else if (activeFilters.category === "Trap") {
+          filtered = filtered.filter(c => c.type.toLowerCase().includes("trap"));
         }
-        if (activeFilters.attribute) {
+
+        // Subtype filter (race for monsters, race for spell/trap property)
+        if (activeFilters.subtype) {
+          if (activeFilters.category === "Monster") {
+            const selectedSubtype = MONSTER_SUBTYPES.find(s => s.value === activeFilters.subtype);
+            if (selectedSubtype?.useDesc) {
+              // "Special Summon" monsters — identified by the canonical summoning restriction text
+              filtered = filtered.filter(c => c.desc.toLowerCase().includes("cannot be normal summoned") || c.desc.toLowerCase().includes("cannot be normal summon"));
+            } else {
+              filtered = filtered.filter(c => c.type.toLowerCase().includes(activeFilters.subtype.toLowerCase()));
+            }
+          } else {
+            filtered = filtered.filter(c => c.race.toLowerCase() === activeFilters.subtype.toLowerCase());
+          }
+        }
+
+        // Attribute (only for monsters)
+        if (activeFilters.attribute && activeFilters.category === "Monster") {
           filtered = filtered.filter(c => c.attribute.toUpperCase() === activeFilters.attribute.toUpperCase());
         }
         if (activeFilters.isAdvancedEnabled) {
@@ -1217,10 +1339,97 @@
         nextPageBtn.disabled = page === totalPages;
       }
 
+      const MONSTER_SUBTYPES = [
+        { label: "Normal",       value: "Normal Monster" },
+        { label: "Effect",       value: "Effect Monster" },
+        { label: "Fusion",       value: "Fusion Monster" },
+        { label: "Ritual",       value: "Ritual Monster" },
+        { label: "Synchro",      value: "Synchro Monster" },
+        { label: "Xyz",          value: "XYZ Monster" },
+        { label: "Pendulum",     value: "Pendulum" },
+        { label: "Link",         value: "Link Monster" },
+        { label: "Special Summon",  value: "Special Summon", useDesc: true },
+        { label: "Normal Tuner",   value: "Normal Tuner Monster" },
+        { label: "Pendulum Normal",   value: "Pendulum Normal Monster" },
+        { label: "Synchro Tuner",  value: "Synchro Tuner Monster" },
+        { label: "Tuner",        value: "Tuner Monster" },
+        { label: "Gemini",       value: "Gemini Monster" },
+        { label: "Union",        value: "Union Effect Monster" },
+        { label: "Spirit",       value: "Spirit Monster" },
+        { label: "Flip",         value: "Flip Effect Monster" },
+        { label: "Toon",         value: "Toon Monster" },
+      ];
+      const SPELL_SUBTYPES = [
+        { label: "Normal",      value: "Normal" },
+        { label: "Quick-Play",  value: "Quick-Play" },
+        { label: "Continuous",  value: "Continuous" },
+        { label: "Ritual",      value: "Ritual" },
+        { label: "Equip",       value: "Equip" },
+        { label: "Field",       value: "Field" },
+        { label: "Link",        value: "Link" },
+      ];
+      const TRAP_SUBTYPES = [
+        { label: "Normal",     value: "Normal" },
+        { label: "Continuous", value: "Continuous" },
+        { label: "Counter",    value: "Counter" },
+      ];
+
+      function updateSubtypeDropdown(category) {
+        const subtypeRow = document.getElementById("subtype-row");
+        const attributeRow = document.getElementById("attribute-row");
+        const subtypeEl = selectSubtype;
+        if (!subtypeEl) return;
+
+        subtypeEl.innerHTML = '<option value="">ALL</option>';
+
+        if (category === "Monster") {
+          subtypeRow.classList.remove("hidden");
+          attributeRow.classList.remove("hidden");
+          MONSTER_SUBTYPES.forEach(({ label, value }) => {
+            const opt = document.createElement("option");
+            opt.value = value;
+            opt.textContent = label.toUpperCase();
+            subtypeEl.appendChild(opt);
+          });
+        } else if (category === "Spell") {
+          subtypeRow.classList.remove("hidden");
+          attributeRow.classList.add("hidden");
+          SPELL_SUBTYPES.forEach(({ label, value }) => {
+            const opt = document.createElement("option");
+            opt.value = value;
+            opt.textContent = label.toUpperCase();
+            subtypeEl.appendChild(opt);
+          });
+        } else if (category === "Trap") {
+          subtypeRow.classList.remove("hidden");
+          attributeRow.classList.add("hidden");
+          TRAP_SUBTYPES.forEach(({ label, value }) => {
+            const opt = document.createElement("option");
+            opt.value = value;
+            opt.textContent = label.toUpperCase();
+            subtypeEl.appendChild(opt);
+          });
+        } else {
+          subtypeRow.classList.add("hidden");
+          attributeRow.classList.add("hidden");
+        }
+      }
+
       function setupEventListeners() {
         inputName?.addEventListener("input", (e) => { activeFilters.name = e.target.value.trim(); triggerFuzzySearch(); });
         inputText?.addEventListener("input", (e) => { activeFilters.text = e.target.value.trim(); triggerFuzzySearch(); });
-        selectType?.addEventListener("change", (e) => { activeFilters.type = e.target.value; page = 1; fetchCards(); });
+
+        selectCategory?.addEventListener("change", (e) => {
+          activeFilters.category = e.target.value;
+          activeFilters.subtype = "";
+          activeFilters.attribute = "";
+          if (selectSubtype) selectSubtype.value = "";
+          if (selectAttribute) selectAttribute.value = "";
+          updateSubtypeDropdown(e.target.value);
+          page = 1; fetchCards();
+        });
+        selectSubtype?.addEventListener("change", (e) => { activeFilters.subtype = e.target.value; page = 1; fetchCards(); });
+        selectAttribute?.addEventListener("change", (e) => { activeFilters.attribute = e.target.value; page = 1; fetchCards(); });
         selectSortBy?.addEventListener("change", (e) => { activeFilters.sortBy = e.target.value; page = 1; fetchCards(); });
         selectSortOrder?.addEventListener("change", (e) => { activeFilters.sortOrder = e.target.value; page = 1; fetchCards(); });
         checkboxPointed?.addEventListener("change", (e) => { activeFilters.pointedOnly = e.target.checked; page = 1; fetchCards(); });
@@ -1239,29 +1448,17 @@
           });
         });
 
-        document.querySelectorAll(".attr-btn").forEach(btn => {
-          btn.addEventListener("click", () => {
-            const attr = btn.getAttribute("data-attr");
-            if (activeFilters.attribute === attr) {
-              activeFilters.attribute = "";
-              btn.classList.remove("attr-active");
-            } else {
-              document.querySelectorAll(".attr-btn").forEach(b => b.classList.remove("attr-active"));
-              activeFilters.attribute = attr;
-              btn.classList.add("attr-active");
-            }
-            page = 1; fetchCards();
-          });
-        });
 
         prevPageBtn?.addEventListener("click", () => { if (page > 1) { page--; fetchCards(); window.scrollTo({ top: 100, behavior: 'smooth' }); } });
         nextPageBtn?.addEventListener("click", () => { if (page < totalPages) { page++; fetchCards(); window.scrollTo({ top: 100, behavior: 'smooth' }); } });
         resetFiltersBtn?.addEventListener("click", resetAllFilters);
         refreshCacheBtn?.addEventListener("click", async () => {
-          refreshCacheBtn.innerHTML = "Refetching...";
-          await loadDatabase();
+          refreshCacheBtn.innerHTML = "SYNCING...";
+          refreshCacheBtn.disabled = true;
+          await loadDatabase(true);
           fetchCards();
           refreshCacheBtn.innerHTML = "SYNC DATABASE";
+          refreshCacheBtn.disabled = false;
         });
 
         modalClose?.addEventListener("click", closeModal);
@@ -1356,7 +1553,7 @@
 
       window.resetAllFilters = () => {
         activeFilters = {
-          name: "", type: "", attribute: "", text: "",
+          name: "", category: "", subtype: "", attribute: "", text: "",
           minLevel: "", maxLevel: "", minAtk: "", maxAtk: "", minDef: "", maxDef: "",
           minPoints: "", maxPoints: "", pointedOnly: false,
           sortBy: "name", sortOrder: "asc", isAdvancedEnabled: false,
@@ -1365,13 +1562,17 @@
 
         if (inputName) inputName.value = "";
         if (inputText) inputText.value = "";
-        if (selectType) selectType.value = "";
+        if (selectCategory) selectCategory.value = "";
+        if (selectSubtype) selectSubtype.value = "";
+        if (selectAttribute) selectAttribute.value = "";
         if (selectSortBy) selectSortBy.value = "name";
         if (selectSortOrder) selectSortOrder.value = "asc";
         if (checkboxPointed) checkboxPointed.checked = false;
         
+        document.getElementById("subtype-row")?.classList.add("hidden");
+        document.getElementById("attribute-row")?.classList.add("hidden");
+        
         [inputMinLevel, inputMaxLevel, inputMinAtk, inputMaxAtk, inputMinDef, inputMaxDef, inputMinPoints, inputMaxPoints].forEach(el => { if (el) el.value = ""; });
-        document.querySelectorAll(".attr-btn").forEach(b => b.classList.remove("attr-active"));
         switchDescTab("simple");
         page = 1;
         fetchCards();
