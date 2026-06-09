@@ -55,7 +55,7 @@ export function renderCards(cards, gridEl, totalMatchesEl, totalCards) {
 
   let html = "";
   cards.forEach((card, idx) => {
-    const isMonster = !card.type.toLowerCase().includes("spell") && !card.type.toLowerCase().includes("trap");
+    const isMonster = !card.type.toLowerCase().includes("spell") && !card.type.toLowerCase().includes("trap") && !card.type.toLowerCase().includes("skill") && card.type !== "Token";
     const badgeClass = getPointsBadgeClass(card.points);
     html += `
       <div onclick="openModal(${idx})" class="group cursor-pointer bg-white border-4 border-black p-4 flex flex-col justify-between shadow-[4px_4px_0px_0px_black] hover:-translate-y-1 transition-all duration-150 relative">
@@ -123,7 +123,7 @@ export function openModal(card, refs) {
   modalTitle.innerText = card.name;
   modalDesc.innerText  = card.desc;
 
-  const isMonster = !card.type.toLowerCase().includes("spell") && !card.type.toLowerCase().includes("trap");
+  const isMonster = !card.type.toLowerCase().includes("spell") && !card.type.toLowerCase().includes("trap") && !card.type.toLowerCase().includes("skill") && card.type !== "Token";
   if (isMonster) {
     modalStatsBlock.classList.remove("hidden");
     modalAtk.innerText = `${card.atk} ATK`;
@@ -257,24 +257,31 @@ export function renderRaceToggles(container, activeRaces, MONSTER_RACES, onChang
 
 const TYPE_CONFIGS = {
   Monster: {
-    "Normal Monster":          "bg-amber-200   text-amber-900  border-amber-400",
-    "Effect Monster":          "bg-orange-500  text-white      border-orange-700",
-    "Fusion Monster":          "bg-purple-500  text-white      border-purple-700",
-    "Ritual Monster":          "bg-blue-700    text-white      border-blue-900",
-    "Synchro Monster":         "bg-slate-200   text-slate-900  border-slate-400",
-    "XYZ Monster":             "bg-gray-900    text-white      border-black",
-    "Pendulum":                "bg-emerald-500 text-white      border-emerald-700",
-    "Link Monster":            "bg-blue-500    text-white      border-blue-700",
-    "Special Summon":          "bg-zinc-600    text-white      border-zinc-800",
-    "Normal Tuner Monster":    "bg-cyan-200    text-cyan-900   border-cyan-400",
-    "Pendulum Normal Monster": "bg-teal-400    text-white      border-teal-600",
-    "Synchro Tuner Monster":   "bg-slate-400   text-white      border-slate-600",
-    "Tuner Monster":           "bg-cyan-500    text-white      border-cyan-700",
-    "Gemini Monster":          "bg-rose-400    text-white      border-rose-600",
-    "Union Effect Monster":    "bg-amber-500   text-white      border-amber-700",
-    "Spirit Monster":          "bg-sky-400     text-white      border-sky-600",
-    "Flip Effect Monster":     "bg-yellow-400  text-black      border-yellow-600",
-    "Toon Monster":            "bg-pink-500    text-white      border-pink-700",
+    "Effect Monster":                    "bg-orange-500  text-white      border-orange-700",
+    "Flip Effect Monster":               "bg-yellow-400  text-black      border-yellow-600",
+    "Flip Tuner Effect Monster":         "bg-yellow-500  text-black      border-yellow-700",
+    "Fusion Monster":                    "bg-purple-500  text-white      border-purple-700",
+    "Gemini Monster":                    "bg-rose-400    text-white      border-rose-600",
+    "Link Monster":                      "bg-blue-500    text-white      border-blue-700",
+    "Normal Monster":                    "bg-amber-200   text-amber-900  border-amber-400",
+    "Normal Tuner Monster":              "bg-cyan-200    text-cyan-900   border-cyan-400",
+    "Pendulum Effect Fusion Monster":    "bg-fuchsia-500 text-white      border-fuchsia-700",
+    "Pendulum Effect Monster":           "bg-emerald-500 text-white      border-emerald-700",
+    "Pendulum Effect Ritual Monster":    "bg-indigo-500  text-white      border-indigo-700",
+    "Pendulum Flip Effect Monster":      "bg-lime-400    text-black      border-lime-600",
+    "Pendulum Normal Monster":           "bg-teal-400    text-white      border-teal-600",
+    "Pendulum Tuner Effect Monster":     "bg-green-400   text-black      border-green-600",
+    "Ritual Effect Monster":             "bg-violet-500  text-white      border-violet-700",
+    "Ritual Monster":                    "bg-blue-700    text-white      border-blue-900",
+    "Spirit Monster":                    "bg-sky-400     text-white      border-sky-600",
+    "Synchro Monster":                   "bg-slate-200   text-slate-900  border-slate-400",
+    "Synchro Pendulum Effect Monster":   "bg-pink-400    text-black      border-pink-600",
+    "Synchro Tuner Monster":             "bg-slate-400   text-white      border-slate-600",
+    "Toon Monster":                      "bg-pink-500    text-white      border-pink-700",
+    "Tuner Monster":                     "bg-cyan-500    text-white      border-cyan-700",
+    "Union Effect Monster":              "bg-amber-500   text-white      border-amber-700",
+    "XYZ Monster":                       "bg-gray-900    text-white      border-black",
+    "XYZ Pendulum Effect Monster":       "bg-gray-700    text-white      border-gray-900",
   },
   Spell: {
     "Normal":     "bg-green-600   text-white border-green-800",

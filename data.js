@@ -1,6 +1,5 @@
 // ============================================================
 //  data.js — Genesys Points Registry & Static Lookup Tables
-//  Edit this file when updating card point values or subtypes.
 // ============================================================
 
 export const GENESYS_POINTS_DICT = {
@@ -634,41 +633,49 @@ export const GENESYS_POINTS_DICT = {
   "Zoodiac Ratpier": 50
 };
 
+// Complete list of all card types from the YGOProDeck API
 export const MONSTER_SUBTYPES = [
-  { label: "Normal", value: "Normal Monster" },
-  { label: "Effect", value: "Effect Monster" },
-  { label: "Fusion", value: "Fusion Monster" },
-  { label: "Ritual", value: "Ritual Monster" },
-  { label: "Synchro", value: "Synchro Monster" },
-  { label: "Xyz", value: "XYZ Monster" },
-  { label: "Pendulum", value: "Pendulum" },
-  { label: "Link", value: "Link Monster" },
-  { label: "Special Summon", value: "Special Summon", useDesc: true },
-  { label: "Normal Tuner", value: "Normal Tuner Monster" },
-  { label: "Pendulum Normal", value: "Pendulum Normal Monster" },
-  { label: "Synchro Tuner", value: "Synchro Tuner Monster" },
-  { label: "Tuner", value: "Tuner Monster" },
-  { label: "Gemini", value: "Gemini Monster" },
-  { label: "Union", value: "Union Effect Monster" },
-  { label: "Spirit", value: "Spirit Monster" },
-  { label: "Flip", value: "Flip Effect Monster" },
-  { label: "Toon", value: "Toon Monster" },
+  { label: "Effect",                    value: "Effect Monster" },
+  { label: "Flip Effect",               value: "Flip Effect Monster" },
+  { label: "Flip Tuner Effect",         value: "Flip Tuner Effect Monster" },
+  { label: "Fusion",                    value: "Fusion Monster" },
+  { label: "Gemini",                    value: "Gemini Monster" },
+  { label: "Link",                      value: "Link Monster" },
+  { label: "Normal",                    value: "Normal Monster" },
+  { label: "Normal Tuner",              value: "Normal Tuner Monster" },
+  { label: "Pendulum Effect Fusion",    value: "Pendulum Effect Fusion Monster" },
+  { label: "Pendulum Effect",           value: "Pendulum Effect Monster" },
+  { label: "Pendulum Effect Ritual",    value: "Pendulum Effect Ritual Monster" },
+  { label: "Pendulum Flip Effect",      value: "Pendulum Flip Effect Monster" },
+  { label: "Pendulum Normal",           value: "Pendulum Normal Monster" },
+  { label: "Pendulum Tuner Effect",     value: "Pendulum Tuner Effect Monster" },
+  { label: "Ritual Effect",             value: "Ritual Effect Monster" },
+  { label: "Ritual",                    value: "Ritual Monster" },
+  { label: "Spirit",                    value: "Spirit Monster" },
+  { label: "Synchro",                   value: "Synchro Monster" },
+  { label: "Synchro Pendulum Effect",   value: "Synchro Pendulum Effect Monster" },
+  { label: "Synchro Tuner",             value: "Synchro Tuner Monster" },
+  { label: "Toon",                      value: "Toon Monster" },
+  { label: "Tuner",                     value: "Tuner Monster" },
+  { label: "Union Effect",              value: "Union Effect Monster" },
+  { label: "Xyz",                       value: "XYZ Monster" },
+  { label: "Xyz Pendulum Effect",       value: "XYZ Pendulum Effect Monster" },
 ];
 
 export const SPELL_SUBTYPES = [
-  { label: "Normal", value: "Normal" },
+  { label: "Normal",     value: "Normal" },
   { label: "Quick-Play", value: "Quick-Play" },
   { label: "Continuous", value: "Continuous" },
-  { label: "Ritual", value: "Ritual" },
-  { label: "Equip", value: "Equip" },
-  { label: "Field", value: "Field" },
-  { label: "Link", value: "Link" },
+  { label: "Ritual",     value: "Ritual" },
+  { label: "Equip",      value: "Equip" },
+  { label: "Field",      value: "Field" },
+  { label: "Link",       value: "Link" },
 ];
 
 export const TRAP_SUBTYPES = [
-  { label: "Normal", value: "Normal" },
+  { label: "Normal",     value: "Normal" },
   { label: "Continuous", value: "Continuous" },
-  { label: "Counter", value: "Counter" },
+  { label: "Counter",    value: "Counter" },
 ];
 
 // All monster races/types as they appear in the YGOProdeck API

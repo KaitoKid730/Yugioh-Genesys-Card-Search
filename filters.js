@@ -27,7 +27,10 @@ export function applyFilters(pool, activeFilters, page) {
     }
 
     if (activeFilters.category === "Monster") {
-      filtered = filtered.filter(c => !c.type.toLowerCase().includes("spell") && !c.type.toLowerCase().includes("trap"));
+      filtered = filtered.filter(c => {
+        const t = c.type.toLowerCase();
+        return !t.includes("spell") && !t.includes("trap") && !t.includes("skill") && t !== "token";
+      });
     } else if (activeFilters.category === "Spell") {
       filtered = filtered.filter(c => c.type.toLowerCase().includes("spell"));
     } else if (activeFilters.category === "Trap") {
@@ -38,15 +41,10 @@ export function applyFilters(pool, activeFilters, page) {
       filtered = filtered.filter(c => {
         return activeFilters.subtypes.some(subtype => {
           if (activeFilters.category === "Monster") {
-            const found = MONSTER_SUBTYPES.find(s => s.value === subtype);
-            const useDesc = found?.useDesc ?? false;
-            if (useDesc) {
-              return c.desc.toLowerCase().includes("cannot be normal summoned") ||
-                     c.desc.toLowerCase().includes("cannot be normal summon");
-            } else {
-              return c.type.toLowerCase().includes(subtype.toLowerCase());
-            }
+            // Exact match for monster types
+            return c.type === subtype;
           } else {
+            // Spell/Trap match by race/property
             return c.race.toLowerCase() === subtype.toLowerCase();
           }
         });

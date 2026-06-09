@@ -5,7 +5,7 @@
 import { GENESYS_POINTS_DICT } from "./data.js";
 
 const DB_NAME    = "GenesysCardDB";
-const DB_VERSION = 1;
+const DB_VERSION = 4;
 const STORE_NAME = "cardCache";
 const CACHE_KEY  = "allCards";
 const META_KEY   = "cacheMeta";
@@ -71,12 +71,14 @@ function processRawCards(remoteCards) {
       imageUrl = first.image_url_cropped || first.image_url || "";
     }
 
-    // Safer attribute fallback for monsters
+    // Safer attribute fallback
     let attribute = c.attribute;
     if (!attribute) {
       const typeLower = (c.type || "").toLowerCase();
-      if (typeLower.includes("spell")) attribute = "SPELL";
-      else if (typeLower.includes("trap")) attribute = "TRAP";
+      if (typeLower === "spell card") attribute = "SPELL";
+      else if (typeLower === "trap card") attribute = "TRAP";
+      else if (typeLower === "skill card") attribute = "SKILL";
+      else if (typeLower === "token") attribute = "TOKEN";
       else attribute = "UNKNOWN";
     }
 
