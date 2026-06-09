@@ -4,69 +4,47 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Yu-Gi-Oh! GENESYS Card Index & Point Searcher</title>
-    <!-- CSS Fonts & Icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500;700&display=swap" />
-    <!-- Tailwind Play CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Outfit', 'sans-serif'],
-              mono: ['JetBrains Mono', 'monospace'],
-            }
-          }
-        }
-      }
-    </script>
-    <style>
-      .bauhaus-cross-grid {
-        background-image: linear-gradient(to right, rgba(18,18,18,0.06) 1px, transparent 1px),
-                          linear-gradient(to bottom, rgba(18,18,18,0.06) 1px, transparent 1px);
-        background-size: 24px 24px;
-      }
-      .attr-active {
-        background-color: #121212 !important;
-        color: #FFFFFF !important;
-        border-color: #121212 !important;
-      }
-    </style>
-  </head>
+    <link rel="stylesheet" href="styles.css" />
+  <base target="_blank">
+</head>
   <body class="bg-[#FAF9F5] text-black min-h-screen relative font-sans selection:bg-black selection:text-[#FAF9F5]">
-    
+    <div id="announcement-banner" class="hidden relative z-50 border-b-4 border-black bg-[#FFE0E0] shadow-[0px_4px_0px_0px_black] transition-all duration-300">
+      <div class="max-w-7xl mx-auto px-4 py-3.5 flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <span class="bg-[#D02020] text-white text-[10px] font-mono font-black uppercase px-2 py-0.5 border-2 border-black inline-block animate-bounce shadow-[1px_1px_0px_0px_black]">ANNOUNCEMENT</span>
+          <p id="announcement-text" class="text-xs sm:text-sm font-bold text-black"></p>
+        </div>
+        <button id="announcement-close" class="bg-black hover:bg-[#D02020] text-white px-3 py-1.5 border-2 border-black font-black text-xs uppercase shadow-[1px_1px_0px_0px_black] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none cursor-pointer">
+          DISMISS ✕
+        </button>
+      </div>
+    </div>
     <div class="absolute inset-0 z-0 pointer-events-none bauhaus-cross-grid"></div>
-
-    <!-- Header Block -->
     <header class="relative z-10 border-b-4 border-black bg-white shadow-[0px_4px_0px_0px_black]">
       <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
         <div class="flex items-center gap-4">
-          <div class="w-12 h-12 bg-black flex items-center justify-center text-white font-black text-3xl select-none shadow-[2px_2px_0px_0px_#D02020]">
-            G
-          </div>
+          <div class="w-12 h-12 bg-black flex items-center justify-center text-white font-black text-3xl select-none shadow-[2px_2px_0px_0px_#D02020]">G</div>
           <div>
             <h1 class="text-3xl md:text-4xl font-black uppercase tracking-tighter text-black flex items-baseline gap-2">
-              GENESYS <span class="text-xs font-mono font-bold tracking-widest text-[#D02020] border-2 border-[#D02020] px-1.5 py-0.5 relative -top-1">SEARCHER</span>
+              GENESYS
+              <span class="text-xs font-mono font-bold tracking-widest text-[#D02020] border-2 border-[#D02020] px-1.5 py-0.5 relative -top-1">SEARCHER</span>
             </h1>
           </div>
         </div>
-
         <div class="flex flex-col md:flex-row items-stretch md:items-center gap-4">
           <div class="border-2 border-black bg-[#F0F0F0] p-3 font-mono text-[10px] font-black tracking-wider flex items-center gap-2.5">
             <span class="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse border border-black inline-block"></span>
             <span id="cache-stats" class="text-black uppercase">DATABASE: SYNCING DATA ONLINE...</span>
           </div>
-          <button id="refresh-cache" class="bg-black hover:bg-[#D02020] text-white px-5 py-3 border-2 border-black font-black text-xs uppercase tracking-widest shadow-[3px_3px_0px_0px_black] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all duration-150 flex items-center justify-center gap-2 cursor-pointer">
+          <button id="refresh-cache" class="bg-black hover:bg-[#D02020] text-white px-5 py-3 border-2 border-black font-black text-xs uppercase tracking-widest shadow-[3px_3px_0px_0px_black] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all duration-150 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed">
             SYNC DATABASE
           </button>
         </div>
       </div>
     </header>
-
-    <!-- Main Container -->
     <main class="relative z-10 max-w-7xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
-      
-      <!-- LYNX: FILTER CONTROLS -->
       <section class="lg:col-span-4 flex flex-col gap-6" id="filters-sidebar">
         <div class="border-4 border-black bg-white p-6 shadow-[6px_6px_0px_0px_black] relative overflow-hidden">
           <div class="absolute top-0 left-0 right-0 h-2 bg-black"></div>
@@ -74,13 +52,11 @@
             <h2 class="text-xl font-black uppercase tracking-tight text-black">SEARCH FILTERS</h2>
             <div class="w-5 h-5 bg-[#F0C020] border-2 border-black"></div>
           </div>
-
           <div class="flex flex-col gap-5">
             <div>
               <label for="search-name" class="block font-mono text-[10px] font-black uppercase tracking-wider text-gray-500 mb-2">CARD NAME</label>
               <input type="text" id="search-name" placeholder="e.g. Blue-Eyes, Metamorphosis..." class="w-full bg-white border-2 border-black px-4 py-3 font-medium text-sm focus:outline-none placeholder:text-gray-400" />
             </div>
-
             <div class="flex flex-col gap-3">
               <div>
                 <label for="search-category" class="block font-mono text-[10px] font-black uppercase tracking-wider text-gray-500 mb-2">CATEGORY</label>
@@ -92,13 +68,10 @@
                 </select>
               </div>
               <div id="subtype-row" class="hidden">
-                <label for="search-subtype" class="block font-mono text-[10px] font-black uppercase tracking-wider text-gray-500 mb-2">TYPE</label>
-                <select id="search-subtype" class="w-full bg-white border-2 border-black px-4 py-3 font-bold text-sm focus:outline-none appearance-none cursor-pointer">
-                  <option value="">ALL</option>
-                </select>
+                <label class="block font-mono text-[10px] font-black uppercase tracking-wider text-gray-500 mb-2">CARD TYPE</label>
+                <div id="type-toggles" class="flex flex-wrap gap-1.5"></div>
               </div>
             </div>
-
             <div class="grid grid-cols-2 gap-4">
               <div>
                 <label for="sort-by" class="block font-mono text-[10px] font-black uppercase tracking-wider text-gray-500 mb-2">SORT BY</label>
@@ -119,21 +92,18 @@
                 </select>
               </div>
             </div>
-
             <div class="border-2 border-black p-4 bg-[#F5F5FA]">
               <div class="flex items-center justify-between border-b-2 border-black pb-3 mb-4">
                 <span class="font-mono text-[10px] font-black uppercase tracking-wider text-black">DESCRIPTION SEARCH</span>
                 <div class="flex border-2 border-black text-[9px] font-black uppercase select-none">
-                  <button id="desc-tab-simple" type="button" class="px-2.5 py-1.5 bg-black text-white hover:bg-[#D02020] transition-colors">SIMPLE</button>
-                  <button id="desc-tab-gate" type="button" class="px-2.5 py-1.5 bg-white text-black hover:bg-gray-100 transition-colors border-l-2 border-black">LOGIC GATES</button>
+                  <button id="desc-tab-simple" type="button" class="px-2.5 py-1.5 bg-black text-white hover:bg-[#D02020] transition-colors cursor-pointer text-[9px]">SIMPLE</button>
+                  <button id="desc-tab-gate"   type="button" class="px-2.5 py-1.5 bg-white text-black hover:bg-gray-100 transition-colors border-l-2 border-black cursor-pointer text-[9px]">LOGIC GATES</button>
                 </div>
               </div>
-
               <div id="desc-container-simple">
                 <label for="search-desc" class="block font-mono text-[9px] font-black uppercase tracking-wider text-gray-500 mb-2">SIMPLE DESCRIPTIVE KEYWORDS</label>
                 <input type="text" id="search-desc" placeholder="e.g. Draw, Destroy, Special Summon..." class="w-full bg-white border-2 border-black px-4 py-3 font-medium text-sm focus:outline-none placeholder:text-gray-400" />
               </div>
-
               <div id="desc-container-gate" class="hidden">
                 <div class="flex items-center justify-between mb-3">
                   <span class="block font-mono text-[9px] font-black uppercase tracking-wider text-gray-500 font-bold">LOGIC CONFIGURATION</span>
@@ -142,6 +112,7 @@
                     <select id="adv-outer-gate" class="bg-white border-2 border-black text-[10px] font-bold py-0.5 px-1 cursor-pointer">
                       <option value="OR">OR GATE</option>
                       <option value="AND">AND GATE</option>
+                      <option value="NOT">NOT GATE</option>
                     </select>
                   </div>
                 </div>
@@ -151,7 +122,6 @@
                 </button>
               </div>
             </div>
-
             <div class="border-2 border-black p-4 bg-[#F9F9FA]">
               <label class="flex items-center gap-3 cursor-pointer select-none">
                 <input type="checkbox" id="search-pointed-only" class="w-5 h-5 border-2 border-black bg-white checked:bg-black accent-black cursor-pointer" />
@@ -161,37 +131,30 @@
                 </div>
               </label>
             </div>
-
             <div id="attribute-row" class="hidden">
-              <label for="search-attribute" class="block font-mono text-[10px] font-black uppercase tracking-wider text-gray-500 mb-2">ATTRIBUTE</label>
-              <select id="search-attribute" class="w-full bg-white border-2 border-black px-4 py-3 font-bold text-sm focus:outline-none appearance-none cursor-pointer">
-                <option value="">ALL</option>
-                <option value="EARTH">EARTH</option>
-                <option value="WATER">WATER</option>
-                <option value="FIRE">FIRE</option>
-                <option value="WIND">WIND</option>
-                <option value="LIGHT">LIGHT</option>
-                <option value="DARK">DARK</option>
-                <option value="DIVINE">DIVINE</option>
-              </select>
+              <span class="block font-mono text-[10px] font-black uppercase tracking-wider text-gray-500 mb-2">ATTRIBUTE</span>
+              <div id="attr-toggles" class="flex flex-wrap gap-1.5"></div>
             </div>
-
+            <div id="race-row" class="hidden">
+              <span class="block font-mono text-[10px] font-black uppercase tracking-wider text-gray-500 mb-2">MONSTER TYPE</span>
+              <div id="race-toggles" class="flex flex-wrap gap-1.5"></div>
+            </div>
             <div class="border-t-2 border-black pt-4 mt-2">
               <span class="block font-mono text-[10px] font-black uppercase tracking-wider text-gray-500 mb-3">NUMERICAL BOUNDS</span>
               <div class="grid grid-cols-2 gap-4 mb-3">
                 <div>
                   <label for="search-min-level" class="block text-[9px] font-mono text-gray-500 uppercase tracking-wider mb-1">MIN LVL/RANK/LINK</label>
-                  <input type="number" id="search-min-level" placeholder="1" min="1" max="12" class="w-full bg-white border-2 border-black p-2 font-mono text-xs text-center" />
+                  <input type="number" id="search-min-level" placeholder="1"  min="1"  max="12" class="w-full bg-white border-2 border-black p-2 font-mono text-xs text-center" />
                 </div>
                 <div>
                   <label for="search-max-level" class="block text-[9px] font-mono text-gray-500 uppercase tracking-wider mb-1">MAX LVL/RANK/LINK</label>
-                  <input type="number" id="search-max-level" placeholder="12" min="1" max="12" class="w-full bg-white border-2 border-black p-2 font-mono text-xs text-center" />
+                  <input type="number" id="search-max-level" placeholder="12" min="1"  max="12" class="w-full bg-white border-2 border-black p-2 font-mono text-xs text-center" />
                 </div>
               </div>
               <div class="grid grid-cols-2 gap-4 mb-3">
                 <div>
                   <label for="search-min-atk" class="block text-[9px] font-mono text-gray-500 uppercase tracking-wider mb-1">MIN ATK</label>
-                  <input type="number" id="search-min-atk" placeholder="0" min="0" step="100" class="w-full bg-white border-2 border-black p-2 font-mono text-xs text-center" />
+                  <input type="number" id="search-min-atk" placeholder="0"    min="0" step="100" class="w-full bg-white border-2 border-black p-2 font-mono text-xs text-center" />
                 </div>
                 <div>
                   <label for="search-max-atk" class="block text-[9px] font-mono text-gray-500 uppercase tracking-wider mb-1">MAX ATK</label>
@@ -201,33 +164,42 @@
               <div class="grid grid-cols-2 gap-4 mb-3">
                 <div>
                   <label for="search-min-def" class="block text-[9px] font-mono text-gray-500 uppercase tracking-wider mb-1">MIN DEF</label>
-                  <input type="number" id="search-min-def" placeholder="0" min="0" step="100" class="w-full bg-white border-2 border-black p-2 font-mono text-xs text-center" />
+                  <input type="number" id="search-min-def" placeholder="0"    min="0" step="100" class="w-full bg-white border-2 border-black p-2 font-mono text-xs text-center" />
                 </div>
                 <div>
                   <label for="search-max-def" class="block text-[9px] font-mono text-gray-500 uppercase tracking-wider mb-1">MAX DEF</label>
                   <input type="number" id="search-max-def" placeholder="5000" min="0" step="100" class="w-full bg-white border-2 border-black p-2 font-mono text-xs text-center" />
                 </div>
               </div>
-              <div class="grid grid-cols-2 gap-4">
+              <div class="grid grid-cols-2 gap-4 mb-3">
                 <div>
                   <label for="search-min-points" class="block text-[9px] font-mono text-gray-500 uppercase tracking-wider mb-1">MIN POINTS</label>
-                  <input type="number" id="search-min-points" placeholder="0" min="0" step="1" class="w-full bg-white border-2 border-black p-2 font-mono text-xs text-center" />
+                  <input type="number" id="search-min-points" placeholder="0"   min="0" step="1" class="w-full bg-white border-2 border-black p-2 font-mono text-xs text-center" />
                 </div>
                 <div>
                   <label for="search-max-points" class="block text-[9px] font-mono text-gray-500 uppercase tracking-wider mb-1">MAX POINTS</label>
                   <input type="number" id="search-max-points" placeholder="100" min="0" step="1" class="w-full bg-white border-2 border-black p-2 font-mono text-xs text-center" />
                 </div>
               </div>
+              <div id="scale-row" class="hidden">
+                <div class="grid grid-cols-2 gap-4">
+                <div>
+                  <label for="search-min-scale" class="block text-[9px] font-mono text-gray-500 uppercase tracking-wider mb-1">MIN SCALE</label>
+                  <input type="number" id="search-min-scale" placeholder="0" min="0" max="13" class="w-full bg-white border-2 border-black p-2 font-mono text-xs text-center" />
+                </div>
+                <div>
+                  <label for="search-max-scale" class="block text-[9px] font-mono text-gray-500 uppercase tracking-wider mb-1">MAX SCALE</label>
+                  <input type="number" id="search-max-scale" placeholder="13" min="0" max="13" class="w-full bg-white border-2 border-black p-2 font-mono text-xs text-center" />
+                </div>
+                </div>
+              </div>
             </div>
-
             <button id="reset-filters" class="w-full bg-[#121212] hover:bg-[#D02020] text-white px-4 py-3.5 border-2 border-black font-black text-xs uppercase tracking-widest shadow-[3px_3px_0px_0px_black] active:translate-x-[1px] active:translate-y-[1px] active:shadow-none transition-all duration-150 cursor-pointer mt-2 text-center">
               RESET ALL FILTERS
             </button>
           </div>
         </div>
       </section>
-
-      <!-- PANTHER: CARDS CATALOG -->
       <section class="lg:col-span-8 flex flex-col gap-6">
         <div class="border-4 border-black bg-white px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-[4px_4px_0px_0px_black]">
           <h2 id="total-matches" class="font-black text-xs sm:text-sm uppercase tracking-widest text-black">
@@ -241,9 +213,7 @@
             SEARCHING ORACLE INDEX...
           </div>
         </div>
-
         <div id="cards-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"></div>
-
         <div id="pagination-block" class="border-4 border-black bg-white px-6 py-4 flex items-center justify-between shadow-[4px_4px_0px_0px_black] mt-4 hidden">
           <button id="prev-page" class="px-4 py-2 bg-white hover:bg-[#121212] hover:text-white text-black font-black text-xs uppercase tracking-widest border-2 border-black shadow-[2px_2px_0px_0px_black] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer">
             PREVIOUS BLOCK
@@ -257,52 +227,41 @@
         </div>
       </section>
     </main>
-
-    <!-- FOOTER -->
     <footer class="relative z-10 border-t-4 border-black bg-white py-8 px-4 mt-16 shadow-[0px_-4px_0px_0px_black]">
       <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
         <p class="font-black text-sm uppercase tracking-tight text-black">
-          Yu-Gi-Oh! GENESYS Card Index & Point Searcher standalone
+          Yu-Gi-Oh! GENESYS Card Index & Point Searcher
         </p>
         <div class="text-xs font-mono font-bold text-gray-400">© 2026</div>
       </div>
     </footer>
-
-    <!-- INSPECTOR MODAL -->
     <div id="card-modal" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto hidden">
       <div class="bg-white border-4 border-black w-full max-w-3xl flex flex-col md:flex-row shadow-[8px_8px_0px_0px_black] relative max-h-[90vh] md:max-h-[80vh] overflow-y-auto rounded-none">
-        
         <button id="modal-close" class="absolute top-4 right-4 z-20 w-8 h-8 bg-black hover:bg-[#D02020] text-white font-black text-sm flex items-center justify-center border-2 border-black shadow-[2px_2px_0px_0px_black] cursor-pointer">✕</button>
-
         <div class="md:w-5/12 bg-[#F5F5F5] border-b-4 md:border-b-0 md:border-r-4 border-black p-6 flex items-center justify-center">
           <div class="border-4 border-black bg-white aspect-[3/4] w-full max-w-[280px] shadow-[6px_6px_0px_0px_black] overflow-hidden">
             <img id="modal-img" src="" alt="Detailed card" class="w-full h-full object-cover" />
           </div>
         </div>
-
         <div class="md:w-7/12 p-6 flex flex-col justify-between overflow-y-auto">
           <div>
             <div class="flex flex-wrap items-center gap-2 mb-4 pr-10">
               <span id="modal-points-badge" class="px-3 py-1 font-mono text-xs font-black uppercase bg-[#D02020] text-white border-2 border-black">100 POINTS</span>
               <span class="px-3 py-1 font-mono text-xs font-semibold text-gray-500 bg-gray-100 uppercase border-2 border-black">ID: <span id="modal-id" class="font-black"></span></span>
             </div>
-
             <h2 id="modal-title" class="text-3xl font-black uppercase text-black mb-1 tracking-tight"></h2>
             <div class="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs text-gray-500 font-bold uppercase tracking-wider border-b-2 border-black pb-4 mb-4">
               <span id="modal-type"></span><span>/</span><span id="modal-race"></span><span>/</span><span id="modal-attr"></span>
             </div>
-
             <div id="modal-level-block" class="mb-4">
               <span class="font-mono text-xs font-black text-amber-800 uppercase bg-amber-50 px-2.5 py-1 border border-amber-200">
                 LEVEL: <span id="modal-level"></span> ★
               </span>
             </div>
-
             <div class="bg-[#FAF9F5] border-2 border-black p-4 mb-6 relative">
               <span class="absolute right-3 top-2 font-mono text-[9px] uppercase font-bold text-gray-300">ORACLE ENGRAVING</span>
               <p id="modal-desc" class="text-sm text-gray-700 leading-relaxed font-semibold whitespace-pre-wrap"></p>
             </div>
-
             <div id="modal-stats-block" class="grid grid-cols-2 gap-4 mb-6">
               <div class="border-2 border-black p-3 bg-gray-50 text-center font-mono">
                 <span class="text-[9px] block text-gray-400 uppercase font-black">ATTACK</span>
@@ -314,7 +273,6 @@
               </div>
             </div>
           </div>
-
           <div class="border-t-2 border-black pt-4 mt-4">
             <p id="modal-points-text" class="text-xs text-gray-500 font-semibold mb-4"></p>
             <button id="modal-close-bottom" class="w-full py-3 bg-black hover:bg-[#D02020] text-white font-black text-xs uppercase border-2 border-black shadow-[3px_3px_0px_0px_black] text-center cursor-pointer">
@@ -322,1312 +280,8 @@
             </button>
           </div>
         </div>
-
       </div>
     </div>
-
-    <script>
-      // Standalone Logic with Embedded 657-Card Genesys Point Registry!
-      // This maps points directly on-the-fly inside the browser!
-      const GENESYS_POINTS_DICT = {
-        "\"A Case for K9\"": 20,
-        "Abyss Dweller": 100,
-        "Adamancipator Risen - Dragite": 20,
-        "Agido the Ancient Sentinel": 50,
-        "Albion the Branded Dragon": 5,
-        "Albion the Sanctifire Dragon": 33,
-        "Allure of Darkness": 5,
-        "Ame no Habakiri no Mitsurugi": 100,
-        "Amorphactor Pain, the Imagination Dracoverlord": 100,
-        "Ancient Gear Advance": 33,
-        "Ancient Gear Statue": 33,
-        "And the Band Played On": 100,
-        "Angel O7": 100,
-        "Anti-Spell Fragrance": 100,
-        "Appointer of the Red Lotus": 50,
-        "Arcana Force XXI - The World": 100,
-        "Archlord Kristya": 100,
-        "Archnemeses Eschatos": 100,
-        "Archnemeses Protos": 100,
-        "Artifact Scythe": 100,
-        "Artmage Impasto -Recapture-": 10,
-        "Artmage Non-Finito": 15,
-        "Artmage Vandalism -Assault-": 3,
-        "Artmage Varnish -Alteration-": 3,
-        "Ash Blossom & Joyous Spring": 20,
-        "Assault Synchron": 1,
-        "Astral Kuriboh": 3,
-        "Atlantean Dragoons": 40,
-        "Azamina Ilia Silvia": 20,
-        "Azamina Mu Rcielago": 33,
-        "Bahamut Shark": 81,
-        "Banquet of Millions": 51,
-        "Baronne de Fleur": 80,
-        "Barrier of the Voiceless Voice": 15,
-        "Barrier Statue of the Abyss": 70,
-        "Barrier Statue of the Drought": 70,
-        "Barrier Statue of the Heavens": 70,
-        "Barrier Statue of the Inferno": 70,
-        "Barrier Statue of the Stormwinds": 70,
-        "Barrier Statue of the Torrent": 70,
-        "Beatrice, Lady of the Eternal": 100,
-        "Beelze of the Diabolic Dragons": 100,
-        "Big Welcome Labrynth": 20,
-        "Black Garden": 51,
-        "Blackwing - Boreastorm the Wicked Wind": 20,
-        "Blackwing - Zephyros the Elite": 13,
-        "Black-Winged Assault Dragon": 1,
-        "Blaster, Dragon Ruler of Infernos": 5,
-        "Blaze Fenix, the Burning Bombardment Bird": 70,
-        "Blazing Cartesia, the Virtuous": 3,
-        "Block Dragon": 33,
-        "Bonfire": 33,
-        "Book of Eclipse": 3,
-        "Book of Moon": 4,
-        "Brain Research Lab": 100,
-        "Bramble Rose Dragon": 1,
-        "Branded Expulsion": 33,
-        "Branded Fusion": 40,
-        "Branded Lost": 66,
-        "Brilliant Fusion": 33,
-        "Broww, Huntsman of Dark World": 3,
-        "Butterfly Dagger - Elma": 1,
-        "Bystial Baldrake": 30,
-        "Bystial Dis Pater": 10,
-        "Bystial Druiswurm": 30,
-        "Bystial Magnamhut": 33,
-        "Bystial Saronir": 20,
-        "Called by the Grave": 20,
-        "Card Destruction": 40,
-        "Card of Demise": 40,
-        "Card of Safe Return": 33,
-        "Catapult Turtle": 100,
-        "Celestial Observatory": 5,
-        "Centur-Ion Auxila": 33,
-        "Centur-Ion Primera": 2,
-        "Centur-Ion Trudea": 1,
-        "Chain Strike": 50,
-        "Change of Heart": 6,
-        "Chaofeng, Phantom of the Yang Zing": 13,
-        "Chaos Angel": 20,
-        "Chaos Ruler, the Chaotic Magical Dragon": 50,
-        "Chaos Space": 40,
-        "Charge of the Light Brigade": 25,
-        "Chicken Game": 7,
-        "Clown Crew Biancaviso": 1,
-        "Clown Crew Malabarisme": 10,
-        "Clown Crew Matinee Operatics": 20,
-        "Cold Wave": 100,
-        "Confiscation": 100,
-        "Contact \"C\"": 100,
-        "Cornfield Coatl": 33,
-        "Cosmic Blazar Dragon": 21,
-        "Cosmic Cyclone": 1,
-        "Creature Swap": 1,
-        "Crimson Dragon": 80,
-        "Crossout Designator": 20,
-        "Crystron Inclusion": 25,
-        "Crystron Sulfador": 5,
-        "CXyz Gimmick Puppet Fanatix Machinix": 100,
-        "Cyber Angel Benten": 40,
-        "Cyber Dragon Infinity": 20,
-        "Cyber Jar": 33,
-        "Cyber-Stein": 27,
-        "D.D. Crow": 1,
-        "D.D. Dynamite": 51,
-        "D/D/D Duo-Dawn King Kali Yuga": 77,
-        "D/D/D Wave High King Caesar": 20,
-        "Daigusto Emeral": 1,
-        "Danger! Bigfoot!": 3,
-        "Danger! Chupacabra!": 3,
-        "Danger! Dogman!": 3,
-        "Danger! Mothman!": 3,
-        "Danger! Nessie!": 7,
-        "Danger! Ogopogo!": 3,
-        "Danger! Thunderbird!": 3,
-        "Danger!? Jackalope?": 7,
-        "Danger!? Tsuchinoko?": 7,
-        "Dark End Evaporation Dragon": 1,
-        "Dark Eradicator Warlock": 100,
-        "Dark Hole": 1,
-        "Dark Magician of Destruction": 15,
-        "Dark Ruler No More": 2,
-        "Dark World Archives": 5,
-        "Dark World Dealings": 5,
-        "Darklord Ixchel": 5,
-        "Deception of the Sinful Spoils": 40,
-        "Deck Lockdown": 100,
-        "Deep Sea Aria": 33,
-        "Delinquent Duo": 100,
-        "Demise of the Land": 1,
-        "Denglong, First of the Yang Zing": 20,
-        "Denko Sekka": 20,
-        "Destiny HERO - Destroyer Phoenix Enforcer": 20,
-        "Destiny HERO - Plasma": 20,
-        "Destructive Daruma Karma Cannon": 1,
-        "Diabell, Queen of the White Forest": 25,
-        "Diabellstar the Black Witch": 20,
-        "Different Dimension Ground": 10,
-        "Dimension Fusion": 40,
-        "Dimension Shifter": 10,
-        "Dimensional Barrier": 100,
-        "Dinomorphia Domain": 1,
-        "Dinomorphia Frenzy": 1,
-        "Dinomorphia Intact": 1,
-        "Dinomorphia Rexterm": 91,
-        "Dinowrestler Pankratops": 5,
-        "Divine Arsenal AA-ZEUS - Sky Thunder": 20,
-        "Diviner of the Herald": 33,
-        "Djinn Releaser of Rituals": 100,
-        "Dodododo Warrior": 70,
-        "Dogmatika Ecclesia, the Virtuous": 3,
-        "Domain of the True Monarchs": 50,
-        "Dominus Impulse": 20,
-        "Dominus Purge": 10,
-        "Dominus Spark": 10,
-        "DoomZ XIII Over - Graflareio": 20,
-        "Dracotail Arthalion": 20,
-        "Dracotail Faimena": 30,
-        "Dracotail Flame": 3,
-        "Dracotail Mululu": 7,
-        "Dragon Master Magia": 100,
-        "Dragonic Diagram": 15,
-        "Dragonmaid Sheou": 10,
-        "Dragonmaid Tidying": 5,
-        "Droll & Lock Bird": 20,
-        "Drytron Alpha Thuban": 33,
-        "Drytron Mu Beta Fafnir": 33,
-        "Duality": 3,
-        "Earthbound Immortal Aslla piscu": 51,
-        "Ecclesia and the Dark Dragon": 3,
-        "Eclipse Wyvern": 33,
-        "Effect Veiler": 8,
-        "El Shaddoll Apkallone": 10,
-        "El Shaddoll Winda": 60,
-        "Elder Entity Norden": 91,
-        "Elfnote Power Patron": 15,
-        "Elfnote Regina": 40,
-        "Elzette, Azamina of the White Forest": 22,
-        "Emergency Teleport": 35,
-        "EMERGENCY!": 33,
-        "Eva": 1,
-        "Evenly Matched": 7,
-        "Evigishki Gustkraken": 100,
-        "Evigishki Mind Augus": 1,
-        "Evilswarm Ouroboros": 100,
-        "Evolzar Lars": 20,
-        "Exceptional Schedule": 10,
-        "Exosister Betrayal": 7,
-        "Exosister Mikailis": 10,
-        "Exosister Pax": 5,
-        "Expurrely Noir": 33,
-        "Ext Ryzeal": 25,
-        "F.A. Dawn Dragster": 20,
-        "Fairy Tail - Snow": 85,
-        "Fallen of the White Dragon": 30,
-        "Fiber Jar": 30,
-        "Filia Regis": 10,
-        "Final Countdown": 100,
-        "Fire Formation - Tenki": 35,
-        "Fire King Courtier Ulcanix": 18,
-        "Fire King High Avatar Kirin": 7,
-        "Fishborg Blaster": 33,
-        "Floowandereeze & Robina": 33,
-        "Floowandereeze and the Advent of Adventure": 33,
-        "Floowandereeze and the Magnificent Map": 33,
-        "Flying \"C\"": 7,
-        "Foolish Burial": 33,
-        "Foolish Burial Goods": 7,
-        "Forbidden Chalice": 5,
-        "Forbidden Crown": 10,
-        "Forbidden Droplet": 10,
-        "Forbidden Lance": 3,
-        "Fossil Dig": 33,
-        "Fossil Dyna Pachycephalo": 100,
-        "Frightfur Patchwork": 33,
-        "Fusion Destiny": 33,
-        "Fydraulis Harmonia": 50,
-        "Gagagaga Girl": 15,
-        "Galaxy Photon Dragon": 15,
-        "Gallant Granite": 33,
-        "Garura, Wings of Resonant Life": 4,
-        "Gateway of the Six": 100,
-        "Gem-Knight Lady Lapis Lazuli": 51,
-        "Gem-Knight Master Diamond": 66,
-        "Ghost Belle & Haunted Mansion": 6,
-        "Ghost Meets Girl - A Masterful Mayakashi Shiranui Saga": 100,
-        "Ghost Mourner & Moonlit Chill": 5,
-        "Ghost Ogre & Snow Rabbit": 4,
-        "Ghost Sister & Spooky Dogwood": 3,
-        "Giant Trunade": 40,
-        "Gigantic Spright": 15,
-        "Gimmick Puppet Nightmare": 70,
-        "Gishki Aquamirror": 1,
-        "Gishki Nekromirror": 1,
-        "Give and Take": 91,
-        "Gladiator Beast Tamer Editor": 80,
-        "Glow-Up Bulb": 21,
-        "Goblin Biker Big Gabonga": 15,
-        "Goblin Biker Grand Breakout": 7,
-        "Goblin Biker Grand Entrance": 20,
-        "Gold Sarcophagus": 10,
-        "Golden Cloud Beast - Malong": 4,
-        "Gozen Match": 100,
-        "Graceful Charity": 40,
-        "Grapha, Dragon Lord of Dark World": 5,
-        "Grapha, Dragon Overlord of Dark World": 5,
-        "Grisaille Prison": 10,
-        "Guardian Chimera": 33,
-        "Guiding Quem, the Virtuous": 3,
-        "Heart of the Blue-Eyes": 5,
-        "Heat Wave": 100,
-        "Heavy Storm": 6,
-        "Herald of the Arc Light": 50,
-        "Hot Red Dragon Archfiend Abyss": 20,
-        "Hot Red Dragon Archfiend King Calamity": 21,
-        "Hyper Rank-Up-Magic Utopiforce": 1,
-        "Ice Ryzeal": 20,
-        "Ichiki Sayori-Hime": 5,
-        "Ido the Supreme Magical Force": 100,
-        "Imperial Order": 100,
-        "Imsety, Glory of Horus": 33,
-        "Incredible Ecclesia, the Virtuous": 3,
-        "Infernal Flame Banshee": 33,
-        "Infernity Launcher": 88,
-        "Infinite Impermanence": 12,
-        "Inspector Boarder": 20,
-        "Instant Fusion": 100,
-        "Interrupted Kaiju Slumber": 10,
-        "Into the Void": 7,
-        "Invoked Caliga": 100,
-        "Iron Thunder": 5,
-        "Jet Synchron": 1,
-        "Jowgen the Spiritualist": 100,
-        "Junk Speeder": 100,
-        "K9-04 Noroi": 15,
-        "K9-17 \"Ripper\"": 30,
-        "K9-17 Izuna": 20,
-        "K9-66a Jokul": 33,
-        "K9-X \"Ripper/M\"": 10,
-        "K9-X \"Werewolf\"": 10,
-        "Kaiser Colosseum": 100,
-        "Kashtira Arise-Heart": 97,
-        "Kashtira Fenrir": 30,
-        "Kashtira Unicorn": 30,
-        "Kelbek the Ancient Vanguard": 50,
-        "Keldo the Sacred Protector": 1,
-        "Ketu Dracotail": 15,
-        "Kewl Tune B2B": 40,
-        "Kewl Tune Clip": 6,
-        "Kewl Tune Crackle": 70,
-        "Kewl Tune Cue": 6,
-        "Kewl Tune Rotary": 40,
-        "Kewl Tune Synchro": 10,
-        "King of the Feral Imps": 33,
-        "Knight Armed Dragon, the Armored Knight Dragon": 3,
-        "Knightmare Corruptor Iblee": 100,
-        "Lady Labrynth of the Silver Castle": 40,
-        "Laevatein, Generaider Boss of Shadows": 1,
-        "Last Turn": 100,
-        "Last Will": 100,
-        "Lavalval Chain": 80,
-        "Left Arm Offering": 7,
-        "Legendary Fire King Ponix": 10,
-        "Legendary Lord Six Samurai - Shi En": 10,
-        "Legendary Six Samurai - Shi En": 10,
-        "Level Eater": 100,
-        "Life Equalizer": 100,
-        "Light and Darkness Dragonlord": 20,
-        "Light Barrier": 1,
-        "Light End Sublimation Dragon": 1,
-        "Lightning Storm": 12,
-        "Lightsworn Dragonling": 10,
-        "Lonefire Blossom": 33,
-        "Lose 1 Turn": 100,
-        "Lubellion the Searing Dragon": 10,
-        "Lunalight Liger Dancer": 51,
-        "Lyrilusc - Beryl Canary": 5,
-        "Lyrilusc - Bird Call": 20,
-        "Lyrilusc - Independent Nightingale": 1,
-        "Magical Explosion": 75,
-        "Magical Mid-Breaker Field": 60,
-        "Magical Scientist": 95,
-        "Magician of Black Chaos MAX": 100,
-        "Manju of the Ten Thousand Hands": 1,
-        "Mansion of the Dreadful Dolls": 100,
-        "Masked HERO Dark Law": 70,
-        "Masquerade the Blazing Dragon": 16,
-        "Mass Driver": 100,
-        "Master Peace, the True Dracoslaying King": 33,
-        "Mathmech Circular": 15,
-        "Mathmech Sigma": 7,
-        "Maxx \"C\"": 50,
-        "Medius the Pure": 5,
-        "Megalith Anastasis": 33,
-        "Mementomictlan Tecuhtlica - Creation King": 33,
-        "Mementotlan Bone Party": 33,
-        "Mementotlan Twin Dragon": 33,
-        "Mercurium the Living Quicksilver": 10,
-        "Mereologic Aggregator": 4,
-        "Metamorphosis": 5,
-        "Metaverse": 3,
-        "Mikanko Shinbu - Noble Twins": 18,
-        "Mikanko Water Arabesque": 10,
-        "Millennium Ankh": 3,
-        "Mind Drain": 100,
-        "Mind Master": 1,
-        "Mirrorjade the Iceblade Dragon": 10,
-        "Miscellaneousaurus": 67,
-        "Mistake": 100,
-        "Mistaken Arrest": 10,
-        "Mitsurugi Prayers": 51,
-        "Mitsurugi Ritual": 51,
-        "Monster Gate": 50,
-        "Monster Reborn": 4,
-        "Morphing Jar": 33,
-        "Morphtronic Telefon": 55,
-        "Moulinglacia the Elemental Lord": 100,
-        "Mudora the Sword Oracle": 1,
-        "Mulcharmy Fuwalos": 7,
-        "Mulcharmy Meowls": 2,
-        "Mulcharmy Purulia": 9,
-        "Multi-Universe": 3,
-        "M-X-Saber Invoker": 33,
-        "Mystic Mine": 100,
-        "N.As.H. Knight": 15,
-        "Nadir Servant": 20,
-        "Naturia Barkion": 10,
-        "Naturia Beast": 50,
-        "Naturia Exterio": 100,
-        "Necrovalley": 40,
-        "Neptabyss, the Atlantean Prince": 33,
-        "Nerva the Power Patron of Creation": 5,
-        "Nibiru, the Primal Being": 6,
-        "Nightmare Apprentice": 20,
-        "Nightmare Throne": 25,
-        "Noh-P.U.N.K. Foxy Tune": 7,
-        "Noh-P.U.N.K. Rising Scale": 3,
-        "Number 1: Infection Buzzking": 85,
-        "Number 1: Numeron Gate Ekam": 10,
-        "Number 100: Numeron Dragon": 21,
-        "Number 16: Shock Master": 100,
-        "Number 2: Numeron Gate Dve": 10,
-        "Number 3: Cicada King": 10,
-        "Number 3: Numeron Gate Trini": 10,
-        "Number 38: Hope Harbinger Dragon Titanic Galaxy": 20,
-        "Number 39: Utopia Double": 80,
-        "Number 4: Numeron Gate Catvari": 10,
-        "Number 40: Gimmick Puppet of Strings": 50,
-        "Number 41: Bagooska the Terribly Tired Tapir": 100,
-        "Number 43: Manipulator of Souls": 100,
-        "Number 59: Crooked Cook": 100,
-        "Number 60: Dugares the Timeless": 10,
-        "Number 67: Pair-a-Dice Smasher": 67,
-        "Number 69: Heraldry Crest": 1,
-        "Number 75: Bamboozling Gossip Shadow": 70,
-        "Number 86: Heroic Champion - Rhongomyniad": 68,
-        "Number 89: Diablosis the Mind Hacker": 85,
-        "Number 90: Galaxy-Eyes Photon Lord": 10,
-        "Number 95: Galaxy-Eyes Dark Matter Dragon": 50,
-        "Number 97: Draglubion": 80,
-        "Number 99: Utopia Dragonar": 80,
-        "Number C1: Numeron Chaos Gate Sunya": 10,
-        "Number C40: Gimmick Puppet of Dark Strings": 50,
-        "Number F0: Utopic Draco Future": 20,
-        "Number S0: Utopic ZEXAL": 100,
-        "Numbers Eveil": 70,
-        "Numeron Calling": 30,
-        "Numeron Network": 33,
-        "Obedience Schooled": 40,
-        "Officiator of Doom Samuel": 10,
-        "Ohime the Manifested Mikanko": 33,
-        "Ojama Duo": 2,
-        "Ojama Trio": 3,
-        "One Day of Peace": 11,
-        "One for One": 91,
-        "Onomatopaira": 33,
-        "Original Sinful Spoils - Snake-Eye": 100,
-        "Outer Entity Azathot": 100,
-        "P.U.N.K. JAM Dragon Drive": 15,
-        "Painful Choice": 95,
-        "Phantom Fortress Enterblathnir": 13,
-        "Phantom of Yubel": 76,
-        "Pilgrim Reaper": 50,
-        "Planet Pathfinder": 3,
-        "Pot of Desires": 20,
-        "Pot of Extravagance": 10,
-        "Pot of Greed": 30,
-        "Pot of Prosperity": 40,
-        "Power Vice Dragon": 5,
-        "Powersink Stone": 100,
-        "Premature Burial": 3,
-        "Preparation of Rites": 5,
-        "Pre-Preparation of Rites": 10,
-        "Pressured Planet Wraitsoth": 33,
-        "Primathmech Alembertian": 20,
-        "Primeval Planet Perlereino": 50,
-        "Primite Lordly Lode": 33,
-        "Prohibition": 100,
-        "Pseudo Space": 3,
-        "Psi-Blocker": 61,
-        "Psychic End Punisher": 20,
-        "PSY-Framegear Delta": 7,
-        "PSY-Framegear Epsilon": 7,
-        "PSY-Framegear Gamma": 15,
-        "PSY-Framelord Omega": 100,
-        "Purrely": 10,
-        "Purrely Sleepy Memory": 10,
-        "Purrelyly": 7,
-        "QQ Enneagon": 1,
-        "Question": 11,
-        "Quick Launch": 33,
-        "Radiant Typhoon Chant": 10,
-        "Radiant Typhoon Eldam": 7,
-        "Radiant Typhoon Vision": 10,
-        "Rahu Dracotail": 10,
-        "Raigeki": 4,
-        "Rank-Up-Magic - The Seventh One": 1,
-        "Rank-Up-Magic Admiration of the Thousands": 1,
-        "Rank-Up-Magic Argent Chaos Force": 5,
-        "Rank-Up-Magic Astral Force": 1,
-        "Rank-Up-Magic Cipher Ascension": 1,
-        "Rank-Up-Magic Doom Double Force": 1,
-        "Rank-Up-Magic Magical Force": 1,
-        "Rank-Up-Magic Numeron Force": 1,
-        "Rank-Up-Magic Quick Chaos": 1,
-        "Rank-Up-Magic Raid Force": 1,
-        "Rank-Up-Magic Revolution Force": 1,
-        "Rank-Up-Magic Skip Force": 5,
-        "Rank-Up-Magic Soul Shave Force": 5,
-        "Rank-Up-Magic Zexal Force": 1,
-        "Reasoning": 50,
-        "Red Reboot": 50,
-        "Red-Eyes Black Fullmetal Dragon": 33,
-        "Red-Eyes Dark Dragoon": 100,
-        "Red-Eyes Flare Metal Dragon": 1,
-        "Redox, Dragon Ruler of Boulders": 5,
-        "Regenesis": 10,
-        "Regenesis Archfiend": 10,
-        "Regenesis Code": 10,
-        "Regenesis Sage": 7,
-        "Regenesis Warrior": 3,
-        "Reinforcement of the Army": 33,
-        "Rescue-ACE Air Lifter": 5,
-        "Rescue-ACE Impulse": 5,
-        "Rescue-ACE Preventer": 10,
-        "Retaliating \"C\"": 5,
-        "Return from the Different Dimension": 40,
-        "Return of the Dragon Lords": 7,
-        "Reversal Quiz": 100,
-        "Ritual Beast Tamer Elder": 10,
-        "Rivalry of Warlords": 100,
-        "Ronintoadin": 60,
-        "Royal Decree": 10,
-        "Royal Magical Library": 100,
-        "Royal Oppression": 100,
-        "Runick Tip": 10,
-        "Ryzeal Detonator": 20,
-        "Ryzeal Duo Drive": 20,
-        "Sales Ban": 100,
-        "Sandwich Day": 3,
-        "Sangen Kaimen": 50,
-        "Sangen Summoning": 100,
-        "Sauravis, the Ancient and Ascended": 3,
-        "Schwarzschild Infinity Dragon": 33,
-        "Secret Village of the Spellcasters": 100,
-        "Self-Destruct Button": 100,
-        "Sengenjin Wakes from a Millennium": 33,
-        "Senju of the Thousand Hands": 1,
-        "Set Rotation": 33,
-        "Shaddoll Schism": 10,
-        "Shiina, Twin Tempests of Celestial Thunder": 10,
-        "Shooting Riser Dragon": 33,
-        "Sillva, Warlord of Dark World": 100,
-        "Silvy of the White Forest": 5,
-        "Sixth Sense": 65,
-        "Skill Drain": 100,
-        "Sky Striker Mobilize - Engage!": 7,
-        "Smoke Grenade of the Thief": 87,
-        "Snatch Steal": 4,
-        "Snoww, Unlight of Dark World": 33,
-        "Solemn Accusation": 12,
-        "Solemn Judgment": 7,
-        "Solemn Scolding": 5,
-        "Solemn Strike": 5,
-        "Solemn Warning": 5,
-        "Songs of the Dominators": 10,
-        "Soul Charge": 50,
-        "Soul Drain": 100,
-        "Speedroid Terrortop": 7,
-        "Spell Canceller": 20,
-        "Spell Card \"Soul Exchange\"": 3,
-        "Spenta, the Magistus Sealer": 15,
-        "Spiritual Beast Tamer Lara": 10,
-        "Spright Starter": 10,
-        "Stand Up Centur-Ion!": 5,
-        "Star Seraph Scepter": 5,
-        "Star Seraph Sovereignty": 5,
-        "Stardust Sifr Divine Dragon": 21,
-        "Starliege Seyfert": 33,
-        "Steel-Stringed Sacrifice": 3,
-        "Stray Purrely Street": 5,
-        "Substitoad": 60,
-        "Subterror Guru": 5,
-        "Summon Limit": 100,
-        "Super Polymerization": 13,
-        "Super Quantal Mech King Great Magnus": 33,
-        "Super Starslayer TY-PHON - Sky Crisis": 10,
-        "Supreme King Dragon Starving Venom": 1,
-        "Swap Frog": 33,
-        "Sword Ryzeal": 20,
-        "Swordsoul Emergence": 10,
-        "Swordsoul Grandmaster - Chixiao": 20,
-        "Swordsoul Strategist Longyuan": 5,
-        "T.G. Hyper Librarian": 33,
-        "Tearlaments Havnis": 50,
-        "Tearlaments Kitkallos": 50,
-        "Tearlaments Merrli": 50,
-        "Tearlaments Reinoheart": 50,
-        "Tearlaments Scheiren": 50,
-        "Telekinetic Charging Cell": 100,
-        "Tellarknight Ptolemaeus": 100,
-        "Tempest, Dragon Ruler of Storms": 5,
-        "Tenpai Dragon Chundra": 50,
-        "Tenpai Dragon Genroku": 25,
-        "Tenyi Spirit - Ashuna": 3,
-        "Terraforming": 33,
-        "That Grass Looks Greener": 50,
-        "The Black Goat Laughs": 10,
-        "The Bystial Lubellion": 30,
-        "The Crimson King": 10,
-        "The Dragon that Devours the Dogma": 5,
-        "The Fallen & The Virtuous": 40,
-        "The Forceful Sentry": 100,
-        "The Gates of Dark World": 5,
-        "The Gaze of Timaeus": 1,
-        "The Last Warrior from Another Planet": 100,
-        "The Melody of Awakening Dragon": 25,
-        "The Monarchs Erupt": 50,
-        "The Tyrant Neptune": 100,
-        "The Unstoppable Exodia Incarnate": 20,
-        "The Zombie Vampire": 50,
-        "Theorealize": 5,
-        "There Can Be Only One": 100,
-        "Therion \"King\" Regulus": 20,
-        "Thunder Dragon Colossus": 67,
-        "Thunder King Rai-Oh": 20,
-        "Tidal, Dragon Ruler of Waterfalls": 5,
-        "Toadally Awesome": 20,
-        "Toon Table of Contents": 7,
-        "Totem Bird": 10,
-        "Tour Guide From the Underworld": 3,
-        "Trade-In": 5,
-        "Transaction Rollback": 7,
-        "Trap Dustshoot": 94,
-        "Trap Holic": 7,
-        "Trap Trick": 3,
-        "Traptrix Rafflesia": 20,
-        "Treasures of the Kings": 5,
-        "Tri-Brigade Mercourier": 5,
-        "Triple Tactics Talent": 93,
-        "Triple Tactics Thrust": 13,
-        "Trishula, Dragon of the Ice Barrier": 13,
-        "True King of All Calamities": 100,
-        "Ultimate Slayer": 1,
-        "Ultimaya Tzolkin": 100,
-        "Union Hangar": 15,
-        "Upstart Goblin": 7,
-        "Uzuhime the Manifested Mikanko": 18,
-        "Vanquish Soul Hollie Sue": 33,
-        "Vanquish Soul Jiaolong": 11,
-        "Vanquish Soul Razen": 11,
-        "Varudras, the Final Bringer of the End Times": 20,
-        "Virtual World Kyubi - Shenshen": 20,
-        "Virtual World Mai-Hime - Lulu": 3,
-        "Wandering Gryphon Rider": 50,
-        "WANTED: Seeker of Sinful Spoils": 33,
-        "Welcome Labrynth": 20,
-        "Wind-Up Carrier Zenmaity": 15,
-        "Wind-Up Hunter": 86,
-        "Wishes for Eyes of Blue": 33,
-        "Witch of the White Forest": 33,
-        "World Legacy Monstrosity": 1,
-        "Zaborg the Mega Monarch": 100,
-        "Zalen the Shackled Dragon": 10,
-        "Zoodiac Barrage": 33,
-        "Zoodiac Broadbull": 66,
-        "Zoodiac Drident": 20,
-        "Zoodiac Ratpier": 50
-      };
-
-      let allCardsPool = [];
-      let cards = [];
-      let totalCards = 0;
-      let totalPages = 1;
-      let page = 1;
-      const limit = 12;
-
-      let activeFilters = {
-        name: "", category: "", subtype: "", attribute: "", text: "",
-        minLevel: "", maxLevel: "", minAtk: "", maxAtk: "", minDef: "", maxDef: "",
-        minPoints: "", maxPoints: "", pointedOnly: false,
-        sortBy: "name", sortOrder: "asc", isAdvancedEnabled: false,
-        advancedOuterGate: "OR", advancedGroups: [{ gate: "AND", rules: [{ text: "" }] }]
-      };
-
-      let searchTimeout;
-      
-      const cardsGrid = document.getElementById("cards-grid");
-      const totalMatchesEl = document.getElementById("total-matches");
-      const cacheStatsEl = document.getElementById("cache-stats");
-      const prevPageBtn = document.getElementById("prev-page");
-      const nextPageBtn = document.getElementById("next-page");
-      const pagePillBtn = document.getElementById("page-pill");
-      const searchLoader = document.getElementById("search-loader");
-      const paginationBlock = document.getElementById("pagination-block");
-
-      const inputName = document.getElementById("search-name");
-      const inputText = document.getElementById("search-desc");
-      const selectCategory = document.getElementById("search-category");
-      const selectSubtype = document.getElementById("search-subtype");
-      const selectAttribute = document.getElementById("search-attribute");
-      const selectSortBy = document.getElementById("sort-by");
-      const selectSortOrder = document.getElementById("sort-order");
-      const checkboxPointed = document.getElementById("search-pointed-only");
-      const inputMinLevel = document.getElementById("search-min-level");
-      const inputMaxLevel = document.getElementById("search-max-level");
-      const inputMinAtk = document.getElementById("search-min-atk");
-      const inputMaxAtk = document.getElementById("search-max-atk");
-      const inputMinDef = document.getElementById("search-min-def");
-      const inputMaxDef = document.getElementById("search-max-def");
-      const inputMinPoints = document.getElementById("search-min-points");
-      const inputMaxPoints = document.getElementById("search-max-points");
-      const resetFiltersBtn = document.getElementById("reset-filters");
-      const refreshCacheBtn = document.getElementById("refresh-cache");
-
-      const modal = document.getElementById("card-modal");
-      const modalClose = document.getElementById("modal-close");
-      const modalCloseBottom = document.getElementById("modal-close-bottom");
-      const modalImg = document.getElementById("modal-img");
-      const modalId = document.getElementById("modal-id");
-      const modalType = document.getElementById("modal-type");
-      const modalRace = document.getElementById("modal-race");
-      const modalAttr = document.getElementById("modal-attr");
-      const modalLevelBlock = document.getElementById("modal-level-block");
-      const modalLevel = document.getElementById("modal-level");
-      const modalTitle = document.getElementById("modal-title");
-      const modalDesc = document.getElementById("modal-desc");
-      const modalStatsBlock = document.getElementById("modal-stats-block");
-      const modalAtk = document.getElementById("modal-atk");
-      const modalDef = document.getElementById("modal-def");
-      const modalPointsBadge = document.getElementById("modal-points-badge");
-      const modalPointsText = document.getElementById("modal-points-text");
-
-      function normalizeName(name) {
-        if (!name) return "";
-        let val = name;
-        if (val.toLowerCase().includes("lupis") && val.toLowerCase().includes("k9")) return "K9-ØØ Lupis";
-        if (val.toLowerCase().includes("lupus") && val.toLowerCase().includes("k9")) return "K9-ØØ Lupis";
-        val = val.replace(/&amp;/g, "&");
-        val = val.replace(/\uFFFD/g, "α");
-        return val;
-      }
-
-      // ── IndexedDB helpers ──────────────────────────────────────────────────
-      const DB_NAME    = "GenesysCardDB";
-      const DB_VERSION = 2;
-      const STORE_NAME = "cardCache";
-      const CACHE_KEY  = "allCards";
-      const META_KEY   = "cacheMeta";
-
-      function openDB() {
-        return new Promise((resolve, reject) => {
-          const req = indexedDB.open(DB_NAME, DB_VERSION);
-          req.onupgradeneeded = e => {
-            const db = e.target.result;
-            if (!db.objectStoreNames.contains(STORE_NAME)) {
-              db.createObjectStore(STORE_NAME);
-            }
-          };
-          req.onsuccess = e => resolve(e.target.result);
-          req.onerror   = e => reject(e.target.error);
-        });
-      }
-
-      function idbGet(db, key) {
-        return new Promise((resolve, reject) => {
-          const tx  = db.transaction(STORE_NAME, "readonly");
-          const req = tx.objectStore(STORE_NAME).get(key);
-          req.onsuccess = e => resolve(e.target.result);
-          req.onerror   = e => reject(e.target.error);
-        });
-      }
-
-      function idbPut(db, key, value) {
-        return new Promise((resolve, reject) => {
-          const tx  = db.transaction(STORE_NAME, "readwrite");
-          const req = tx.objectStore(STORE_NAME).put(value, key);
-          req.onsuccess = () => resolve();
-          req.onerror   = e  => reject(e.target.error);
-        });
-      }
-      // ──────────────────────────────────────────────────────────────────────
-
-      function processRawCards(remoteCards) {
-        return remoteCards.map(c => {
-          const rawName = c.name;
-          const norm    = normalizeName(rawName);
-          let points    = GENESYS_POINTS_DICT[norm] || 0;
-          if (points === 0) {
-            for (const [key, val] of Object.entries(GENESYS_POINTS_DICT)) {
-              if (key.toLowerCase() === norm.toLowerCase()) { points = val; break; }
-            }
-          }
-          return {
-            id:         Number(c.id),
-            name:       rawName,
-            type:       c.type,
-            frameType:  c.frameType || "",
-            desc:       c.desc || c.description || "",
-            atk:        c.atk   !== undefined ? Number(c.atk)   : 0,
-            def:        c.def   !== undefined ? Number(c.def)   : 0,
-            level:      c.level !== undefined ? Number(c.level) : 0,
-            race:       c.race  || "N/A",
-            attribute:  c.attribute || (c.type.toLowerCase().includes("spell") ? "SPELL" : c.type.toLowerCase().includes("trap") ? "TRAP" : "SPELL"),
-            image_url:  c.card_images && c.card_images[0] ? (c.card_images[0].image_url_cropped || c.card_images[0].image_url) : "",
-            points
-          };
-        });
-      }
-
-      function updateCacheStats(pool, fromCache, cacheDate) {
-        const total   = pool.length;
-        const pointed = pool.filter(c => c.points > 0).length;
-        if (fromCache && cacheDate) {
-          const d = new Date(cacheDate);
-          const dateStr = d.toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" });
-          cacheStatsEl.innerHTML = `DATABASE: ${total.toLocaleString()} CARDS (${pointed} POINTED) · CACHED ${dateStr.toUpperCase()}`;
-        } else {
-          cacheStatsEl.innerHTML = `DATABASE: ${total.toLocaleString()} CARDS (${pointed} POINTED)`;
-        }
-      }
-
-      async function init() {
-        setupEventListeners();
-        await loadDatabase(false);
-        fetchCards();
-      }
-
-      // forceSync = true  → always hit the API (SYNC DATABASE button)
-      // forceSync = false → use IndexedDB cache if available, otherwise fetch
-      async function loadDatabase(forceSync = false) {
-        if (searchLoader) searchLoader.classList.remove("hidden");
-
-        let db;
-        try { db = await openDB(); } catch (e) { console.warn("IndexedDB unavailable", e); }
-
-        // Try reading from cache first (unless forced sync)
-        if (!forceSync && db) {
-          try {
-            const cached = await idbGet(db, CACHE_KEY);
-            const meta   = await idbGet(db, META_KEY);
-            if (cached && Array.isArray(cached) && cached.length > 0) {
-              allCardsPool = cached;
-              updateCacheStats(allCardsPool, true, meta?.savedAt);
-              if (searchLoader) searchLoader.classList.add("hidden");
-              return; // ← done, no network request
-            }
-          } catch (e) { console.warn("Cache read failed", e); }
-        }
-
-        // Fetch from API
-        cacheStatsEl.innerHTML = `DATABASE: SYNCING DATA ONLINE...`;
-        try {
-          const res = await fetch("https://db.ygoprodeck.com/api/v7/cardinfo.php");
-          if (!res.ok) throw new Error("API unreachable");
-          const json        = await res.json();
-          const remoteCards = json.data || [];
-
-          allCardsPool = processRawCards(remoteCards);
-
-          // Persist to IndexedDB
-          if (db) {
-            try {
-              await idbPut(db, CACHE_KEY, allCardsPool);
-              await idbPut(db, META_KEY,  { savedAt: Date.now() });
-            } catch (e) { console.warn("Cache write failed", e); }
-          }
-
-          updateCacheStats(allCardsPool, false, null);
-
-        } catch (e) {
-          console.error("Network load failed", e);
-
-          // Try falling back to stale cache on network error
-          if (db) {
-            try {
-              const cached = await idbGet(db, CACHE_KEY);
-              const meta   = await idbGet(db, META_KEY);
-              if (cached && cached.length > 0) {
-                allCardsPool = cached;
-                updateCacheStats(allCardsPool, true, meta?.savedAt);
-                cacheStatsEl.innerHTML += " · OFFLINE (STALE CACHE)";
-                if (searchLoader) searchLoader.classList.add("hidden");
-                return;
-              }
-            } catch (_) {}
-          }
-
-          // Absolute fallback
-          cacheStatsEl.innerHTML = `DATABASE: OFFLINE — NO CACHE`;
-          allCardsPool = [
-            { id: 89631139, name: "Blue-Eyes White Dragon", type: "Normal Monster", desc: "This legendary dragon is powerful...", atk: 3000, def: 2500, level: 8, race: "Dragon", attribute: "LIGHT", image_url: "", points: 0 },
-            { id: 33396948, name: "Exodia the Forbidden One", type: "Effect Monster", desc: "Wins standard game.", atk: 1000, def: 1000, level: 3, race: "Spellcaster", attribute: "DARK", image_url: "", points: 30 }
-          ];
-        }
-
-        if (searchLoader) searchLoader.classList.add("hidden");
-      }
-
-      function fetchCards() {
-        if (!cardsGrid) return;
-        cardsGrid.innerHTML = "";
-
-        let filtered = [...allCardsPool];
-
-        if (activeFilters.name) {
-          const q = activeFilters.name.toLowerCase();
-          filtered = filtered.filter(c => normalizeName(c.name).toLowerCase().includes(q));
-        }
-
-        // Category filter: Monster / Spell / Trap
-        if (activeFilters.category === "Monster") {
-          filtered = filtered.filter(c => !c.type.toLowerCase().includes("spell") && !c.type.toLowerCase().includes("trap"));
-        } else if (activeFilters.category === "Spell") {
-          filtered = filtered.filter(c => c.type.toLowerCase().includes("spell"));
-        } else if (activeFilters.category === "Trap") {
-          filtered = filtered.filter(c => c.type.toLowerCase().includes("trap"));
-        }
-
-        // Subtype filter (race for monsters, race for spell/trap property)
-        if (activeFilters.subtype) {
-          if (activeFilters.category === "Monster") {
-            const selectedSubtype = MONSTER_SUBTYPES.find(s => s.value === activeFilters.subtype);
-            if (selectedSubtype?.useDesc) {
-              // "Special Summon" monsters — identified by the canonical summoning restriction text
-              filtered = filtered.filter(c => c.desc.toLowerCase().includes("cannot be normal summoned") || c.desc.toLowerCase().includes("cannot be normal summon"));
-            } else {
-              filtered = filtered.filter(c => c.type.toLowerCase().includes(activeFilters.subtype.toLowerCase()));
-            }
-          } else {
-            filtered = filtered.filter(c => c.race.toLowerCase() === activeFilters.subtype.toLowerCase());
-          }
-        }
-
-        // Attribute (only for monsters)
-        if (activeFilters.attribute && activeFilters.category === "Monster") {
-          filtered = filtered.filter(c => c.attribute.toUpperCase() === activeFilters.attribute.toUpperCase());
-        }
-        if (activeFilters.isAdvancedEnabled) {
-          filtered = filtered.filter(c => {
-            const desc = (c.desc || "").toLowerCase();
-            const results = activeFilters.advancedGroups.map(group => {
-              const activeRules = group.rules.filter(r => r.text.trim() !== "");
-              if (activeRules.length === 0) return true;
-              const ruleResults = activeRules.map(r => desc.includes(r.text.trim().toLowerCase()));
-              if (group.gate === "AND") return ruleResults.every(r => r === true);
-              if (group.gate === "OR") return ruleResults.some(r => r === true);
-              if (group.gate === "NOT") return !ruleResults.some(r => r === true);
-              return true;
-            });
-            return activeFilters.advancedOuterGate === "AND" ? results.every(r => r === true) : results.some(r => r === true);
-          });
-        } else if (activeFilters.text) {
-          filtered = filtered.filter(c => c.desc.toLowerCase().includes(activeFilters.text.toLowerCase()));
-        }
-
-        // Numerical limits
-        if (activeFilters.minLevel !== "") filtered = filtered.filter(c => c.level >= Number(activeFilters.minLevel));
-        if (activeFilters.maxLevel !== "") filtered = filtered.filter(c => c.level <= Number(activeFilters.maxLevel));
-        if (activeFilters.minAtk !== "") filtered = filtered.filter(c => c.atk >= Number(activeFilters.minAtk));
-        if (activeFilters.maxAtk !== "") filtered = filtered.filter(c => c.atk <= Number(activeFilters.maxAtk));
-        if (activeFilters.minDef !== "") filtered = filtered.filter(c => c.def >= Number(activeFilters.minDef));
-        if (activeFilters.maxDef !== "") filtered = filtered.filter(c => c.def <= Number(activeFilters.maxDef));
-        if (activeFilters.minPoints !== "") filtered = filtered.filter(c => c.points >= Number(activeFilters.minPoints));
-        if (activeFilters.maxPoints !== "") filtered = filtered.filter(c => c.points <= Number(activeFilters.maxPoints));
-        if (activeFilters.pointedOnly) filtered = filtered.filter(c => c.points > 0);
-
-        // Sorting
-        const sortBy = activeFilters.sortBy;
-        const desc = activeFilters.sortOrder === "desc";
-        filtered.sort((a, b) => {
-          let comp = 0;
-          if (["points", "atk", "def", "level"].includes(sortBy)) {
-            comp = (a[sortBy] || 0) - (b[sortBy] || 0);
-          } else {
-            comp = (a[sortBy] || "").localeCompare(b[sortBy] || "");
-          }
-          return desc ? -comp : comp;
-        });
-
-        totalCards = filtered.length;
-        totalPages = Math.ceil(totalCards / limit) || 1;
-        if (page > totalPages) page = totalPages;
-        if (page < 1) page = 1;
-
-        cards = filtered.slice((page - 1) * limit, page * limit);
-        renderCards();
-        renderPagination();
-      }
-
-      function renderCards() {
-        if (cards.length === 0) {
-          cardsGrid.innerHTML = `
-            <div class="col-span-full border-4 border-black bg-white p-12 text-center shadow-[4px_4px_0px_0px_black] max-w-xl mx-auto my-4">
-              <h3 class="text-xl font-black uppercase text-black mb-2">No Cards Matched</h3>
-              <p class="text-xs text-gray-500 mb-4">Try relaxing some attributes or search keywords.</p>
-              <button onclick="resetAllFilters()" class="px-5 py-2.5 bg-[#D02020] text-white border-2 border-black font-black text-xs uppercase cursor-pointer">Reset Filters</button>
-            </div>`;
-          totalMatchesEl.innerText = "MATCH FOUND: 0 CARDS";
-          return;
-        }
-
-        totalMatchesEl.innerText = `MATCH FOUND: ${totalCards.toLocaleString()} CARDS`;
-        let html = "";
-        cards.forEach((card, idx) => {
-          const isMonster = !card.type.toLowerCase().includes("spell") && !card.type.toLowerCase().includes("trap");
-          html += `
-            <div onclick="openModal(${idx})" class="group cursor-pointer bg-white border-4 border-black p-4 flex flex-col justify-between shadow-[4px_4px_0px_0px_black] hover:-translate-y-1 transition-all duration-150 relative">
-              <div>
-                <div class="flex items-center justify-between gap-2 mb-3">
-                  <span class="font-mono text-[9px] uppercase font-bold text-gray-400">Class Block</span>
-                  <span class="px-2 py-0.5 font-mono text-[9px] font-black uppercase bg-gray-100 border border-black">${card.attribute}</span>
-                </div>
-                <div class="border-2 border-black bg-gray-100 aspect-square w-full overflow-hidden mb-3">
-                  <img src="${card.image_url}" alt="${card.name}" class="w-full h-full object-cover" onerror="this.src='https://images.ygoprodeck.com/images/cards_cropped/46986414.jpg'" />
-                </div>
-                <h3 class="font-black text-lg text-black uppercase leading-tight truncate" title="${card.name}">${card.name}</h3>
-                <p class="font-mono text-[10px] text-gray-400 uppercase tracking-widest leading-none mt-1 mb-2">${card.type}</p>
-                <div class="font-mono text-[10px] uppercase font-bold text-amber-800 bg-amber-50 px-2.5 py-0.5 border inline-block select-none">
-                  ${card.level > 0 ? `LEVEL ${card.level} ★` : `${card.race}`}
-                </div>
-              </div>
-              <div class="mt-4">
-                <div class="border-2 border-black divide-x-2 divide-black grid grid-cols-2 bg-gray-50 text-center font-mono text-xs py-1 mb-3">
-                  ${isMonster ? `<div><span class="text-[8px] block text-gray-400 uppercase">ATK</span><b>${card.atk}</b></div><div><span class="text-[8px] block text-gray-400">DEF</span><b>${card.def}</b></div>` 
-                              : `<div><span class="text-[8px] block text-gray-400 uppercase">CLASS</span><b>SPELL/TRAP</b></div><div><span class="text-[8px] block text-gray-400">PROP</span><b>${card.race}</b></div>`}
-                </div>
-                <div class="border-2 border-black p-2 font-mono ${card.points > 0 ? 'bg-[#D02020] text-white' : 'bg-white text-black'}">
-                  <div class="text-[8px] uppercase tracking-widest opacity-80 leading-none">Cost Level</div>
-                  <div class="flex items-center justify-between mt-1">
-                    <span class="font-black text-xs">${card.points > 0 ? `${card.points} POINTS` : '0 POINTS (FREE)'}</span>
-                    <span class="text-[8px] opacity-60 font-medium">ID: ${card.id}</span>
-                  </div>
-                </div>
-              </div>
-            </div>`;
-        });
-        cardsGrid.innerHTML = html;
-      }
-
-      function renderPagination() {
-        if (!paginationBlock) return;
-        if (totalPages <= 1) { paginationBlock.classList.add("hidden"); return; }
-        paginationBlock.classList.remove("hidden");
-        pagePillBtn.innerText = `PAGE ${page} OF ${totalPages}`;
-        prevPageBtn.disabled = page === 1;
-        nextPageBtn.disabled = page === totalPages;
-      }
-
-      const MONSTER_SUBTYPES = [
-        { label: "Normal",       value: "Normal Monster" },
-        { label: "Effect",       value: "Effect Monster" },
-        { label: "Fusion",       value: "Fusion Monster" },
-        { label: "Ritual",       value: "Ritual Monster" },
-        { label: "Synchro",      value: "Synchro Monster" },
-        { label: "Xyz",          value: "XYZ Monster" },
-        { label: "Pendulum",     value: "Pendulum" },
-        { label: "Link",         value: "Link Monster" },
-        { label: "Special Summon",  value: "Special Summon", useDesc: true },
-        { label: "Normal Tuner",   value: "Normal Tuner Monster" },
-        { label: "Pendulum Normal",   value: "Pendulum Normal Monster" },
-        { label: "Synchro Tuner",  value: "Synchro Tuner Monster" },
-        { label: "Tuner",        value: "Tuner Monster" },
-        { label: "Gemini",       value: "Gemini Monster" },
-        { label: "Union",        value: "Union Effect Monster" },
-        { label: "Spirit",       value: "Spirit Monster" },
-        { label: "Flip",         value: "Flip Effect Monster" },
-        { label: "Toon",         value: "Toon Monster" },
-      ];
-      const SPELL_SUBTYPES = [
-        { label: "Normal",      value: "Normal" },
-        { label: "Quick-Play",  value: "Quick-Play" },
-        { label: "Continuous",  value: "Continuous" },
-        { label: "Ritual",      value: "Ritual" },
-        { label: "Equip",       value: "Equip" },
-        { label: "Field",       value: "Field" },
-        { label: "Link",        value: "Link" },
-      ];
-      const TRAP_SUBTYPES = [
-        { label: "Normal",     value: "Normal" },
-        { label: "Continuous", value: "Continuous" },
-        { label: "Counter",    value: "Counter" },
-      ];
-
-      function updateSubtypeDropdown(category) {
-        const subtypeRow = document.getElementById("subtype-row");
-        const attributeRow = document.getElementById("attribute-row");
-        const subtypeEl = selectSubtype;
-        if (!subtypeEl) return;
-
-        subtypeEl.innerHTML = '<option value="">ALL</option>';
-
-        if (category === "Monster") {
-          subtypeRow.classList.remove("hidden");
-          attributeRow.classList.remove("hidden");
-          MONSTER_SUBTYPES.forEach(({ label, value }) => {
-            const opt = document.createElement("option");
-            opt.value = value;
-            opt.textContent = label.toUpperCase();
-            subtypeEl.appendChild(opt);
-          });
-        } else if (category === "Spell") {
-          subtypeRow.classList.remove("hidden");
-          attributeRow.classList.add("hidden");
-          SPELL_SUBTYPES.forEach(({ label, value }) => {
-            const opt = document.createElement("option");
-            opt.value = value;
-            opt.textContent = label.toUpperCase();
-            subtypeEl.appendChild(opt);
-          });
-        } else if (category === "Trap") {
-          subtypeRow.classList.remove("hidden");
-          attributeRow.classList.add("hidden");
-          TRAP_SUBTYPES.forEach(({ label, value }) => {
-            const opt = document.createElement("option");
-            opt.value = value;
-            opt.textContent = label.toUpperCase();
-            subtypeEl.appendChild(opt);
-          });
-        } else {
-          subtypeRow.classList.add("hidden");
-          attributeRow.classList.add("hidden");
-        }
-      }
-
-      function setupEventListeners() {
-        inputName?.addEventListener("input", (e) => { activeFilters.name = e.target.value.trim(); triggerFuzzySearch(); });
-        inputText?.addEventListener("input", (e) => { activeFilters.text = e.target.value.trim(); triggerFuzzySearch(); });
-
-        selectCategory?.addEventListener("change", (e) => {
-          activeFilters.category = e.target.value;
-          activeFilters.subtype = "";
-          activeFilters.attribute = "";
-          if (selectSubtype) selectSubtype.value = "";
-          if (selectAttribute) selectAttribute.value = "";
-          updateSubtypeDropdown(e.target.value);
-          page = 1; fetchCards();
-        });
-        selectSubtype?.addEventListener("change", (e) => { activeFilters.subtype = e.target.value; page = 1; fetchCards(); });
-        selectAttribute?.addEventListener("change", (e) => { activeFilters.attribute = e.target.value; page = 1; fetchCards(); });
-        selectSortBy?.addEventListener("change", (e) => { activeFilters.sortBy = e.target.value; page = 1; fetchCards(); });
-        selectSortOrder?.addEventListener("change", (e) => { activeFilters.sortOrder = e.target.value; page = 1; fetchCards(); });
-        checkboxPointed?.addEventListener("change", (e) => { activeFilters.pointedOnly = e.target.checked; page = 1; fetchCards(); });
-
-        [inputMinLevel, inputMaxLevel, inputMinAtk, inputMaxAtk, inputMinDef, inputMaxDef, inputMinPoints, inputMaxPoints].forEach(element => {
-          element?.addEventListener("input", () => {
-            activeFilters.minLevel = inputMinLevel ? inputMinLevel.value : "";
-            activeFilters.maxLevel = inputMaxLevel ? inputMaxLevel.value : "";
-            activeFilters.minAtk = inputMinAtk ? inputMinAtk.value : "";
-            activeFilters.maxAtk = inputMaxAtk ? inputMaxAtk.value : "";
-            activeFilters.minDef = inputMinDef ? inputMinDef.value : "";
-            activeFilters.maxDef = inputMaxDef ? inputMaxDef.value : "";
-            activeFilters.minPoints = inputMinPoints ? inputMinPoints.value : "";
-            activeFilters.maxPoints = inputMaxPoints ? inputMaxPoints.value : "";
-            triggerFuzzySearch();
-          });
-        });
-
-
-        prevPageBtn?.addEventListener("click", () => { if (page > 1) { page--; fetchCards(); window.scrollTo({ top: 100, behavior: 'smooth' }); } });
-        nextPageBtn?.addEventListener("click", () => { if (page < totalPages) { page++; fetchCards(); window.scrollTo({ top: 100, behavior: 'smooth' }); } });
-        resetFiltersBtn?.addEventListener("click", resetAllFilters);
-        refreshCacheBtn?.addEventListener("click", async () => {
-          refreshCacheBtn.innerHTML = "SYNCING...";
-          refreshCacheBtn.disabled = true;
-          await loadDatabase(true);
-          fetchCards();
-          refreshCacheBtn.innerHTML = "SYNC DATABASE";
-          refreshCacheBtn.disabled = false;
-        });
-
-        modalClose?.addEventListener("click", closeModal);
-        modalCloseBottom?.addEventListener("click", closeModal);
-        modal?.addEventListener("click", (e) => { if (e.target === modal) closeModal(); });
-
-        document.getElementById("desc-tab-simple")?.addEventListener("click", () => switchDescTab("simple"));
-        document.getElementById("desc-tab-gate")?.addEventListener("click", () => switchDescTab("gate"));
-        document.getElementById("adv-outer-gate")?.addEventListener("change", (e) => { activeFilters.advancedOuterGate = e.target.value; page = 1; fetchCards(); });
-        document.getElementById("adv-btn-add-group")?.addEventListener("click", () => {
-          activeFilters.advancedGroups.push({ gate: "AND", rules: [{ text: "" }] });
-          renderAdvancedGroups();
-          page = 1; fetchCards();
-        });
-      }
-
-      function switchDescTab(name) {
-        const simpleBtn = document.getElementById("desc-tab-simple");
-        const gateBtn = document.getElementById("desc-tab-gate");
-        const simpleCont = document.getElementById("desc-container-simple");
-        const gateCont = document.getElementById("desc-container-gate");
-
-        if (name === "simple") {
-          activeFilters.isAdvancedEnabled = false;
-          simpleBtn.className = "px-2.5 py-1.5 bg-black text-white cursor-pointer";
-          gateBtn.className = "px-2.5 py-1.5 bg-white text-black border-l-2 border-black cursor-pointer";
-          simpleCont.classList.remove("hidden");
-          gateCont.classList.add("hidden");
-        } else {
-          activeFilters.isAdvancedEnabled = true;
-          gateBtn.className = "px-2.5 py-1.5 bg-black text-white cursor-pointer";
-          simpleBtn.className = "px-2.5 py-1.5 bg-white text-black cursor-pointer";
-          gateCont.classList.remove("hidden");
-          simpleCont.classList.add("hidden");
-          renderAdvancedGroups();
-        }
-        page = 1; fetchCards();
-      }
-
-      function renderAdvancedGroups() {
-        const container = document.getElementById("adv-groups-list");
-        if (!container) return;
-        container.innerHTML = "";
-
-        activeFilters.advancedGroups.forEach((group, gIdx) => {
-          const div = document.createElement("div");
-          div.className = "border-2 border-black bg-white p-3 shadow-[2px_2px_0px_0px_black] relative border-l-4 border-l-[#D02020]";
-          
-          let rules = "";
-          group.rules.forEach((rule, rIdx) => {
-            rules += `
-              <div class="flex items-center mb-1 bg-white">
-                <input type="text" value="${rule.text}" placeholder="e.g. Draw" class="adv-rule p-1 w-full text-xs border border-gray-400" data-g="${gIdx}" data-r="${rIdx}">
-                <button type="button" onclick="removeRule(${gIdx}, ${rIdx})" class="px-2 text-red-500 font-bold">✕</button>
-              </div>`;
-          });
-
-          div.innerHTML = `
-            <div class="flex justify-between items-center mb-2">
-              <select onchange="updateGroupGate(${gIdx}, this.value)" class="border border-black text-xs py-0.5 px-1 bg-white">
-                <option value="AND" ${group.gate === 'AND' ? 'selected' : ''}>AND</option>
-                <option value="OR" ${group.gate === 'OR' ? 'selected' : ''}>OR</option>
-                <option value="NOT" ${group.gate === 'NOT' ? 'selected' : ''}>NOT</option>
-              </select>
-              <button onclick="removeGroup(${gIdx})" class="text-xs text-red-500 font-black">Group ✕</button>
-            </div>
-            ${rules}
-            <button onclick="addRule(${gIdx})" class="mt-2 text-[9px] font-black uppercase tracking-wider">+ Keyword</button>
-          `;
-          container.appendChild(div);
-        });
-
-        document.querySelectorAll(".adv-rule").forEach(input => {
-          input.addEventListener("input", (e) => {
-            const g = input.getAttribute("data-g");
-            const r = input.getAttribute("data-r");
-            activeFilters.advancedGroups[g].rules[r].text = e.target.value;
-            triggerFuzzySearch();
-          });
-        });
-      }
-
-      window.updateGroupGate = (gIdx, val) => { activeFilters.advancedGroups[gIdx].gate = val; page = 1; fetchCards(); };
-      window.removeGroup = (gIdx) => { if (activeFilters.advancedGroups.length > 1) { activeFilters.advancedGroups.splice(gIdx, 1); renderAdvancedGroups(); page = 1; fetchCards(); } };
-      window.addRule = (gIdx) => { activeFilters.advancedGroups[gIdx].rules.push({ text: "" }); renderAdvancedGroups(); };
-      window.removeRule = (gIdx, rIdx) => { if (activeFilters.advancedGroups[gIdx].rules.length > 1) { activeFilters.advancedGroups[gIdx].rules.splice(rIdx, 1); renderAdvancedGroups(); page = 1; fetchCards(); } };
-
-      function triggerFuzzySearch() {
-        clearTimeout(searchTimeout);
-        searchTimeout = setTimeout(() => { page = 1; fetchCards(); }, 350);
-      }
-
-      window.resetAllFilters = () => {
-        activeFilters = {
-          name: "", category: "", subtype: "", attribute: "", text: "",
-          minLevel: "", maxLevel: "", minAtk: "", maxAtk: "", minDef: "", maxDef: "",
-          minPoints: "", maxPoints: "", pointedOnly: false,
-          sortBy: "name", sortOrder: "asc", isAdvancedEnabled: false,
-          advancedOuterGate: "OR", advancedGroups: [{ gate: "AND", rules: [{ text: "" }] }]
-        };
-
-        if (inputName) inputName.value = "";
-        if (inputText) inputText.value = "";
-        if (selectCategory) selectCategory.value = "";
-        if (selectSubtype) selectSubtype.value = "";
-        if (selectAttribute) selectAttribute.value = "";
-        if (selectSortBy) selectSortBy.value = "name";
-        if (selectSortOrder) selectSortOrder.value = "asc";
-        if (checkboxPointed) checkboxPointed.checked = false;
-        
-        document.getElementById("subtype-row")?.classList.add("hidden");
-        document.getElementById("attribute-row")?.classList.add("hidden");
-        
-        [inputMinLevel, inputMaxLevel, inputMinAtk, inputMaxAtk, inputMinDef, inputMaxDef, inputMinPoints, inputMaxPoints].forEach(el => { if (el) el.value = ""; });
-        switchDescTab("simple");
-        page = 1;
-        fetchCards();
-      }
-
-      window.openModal = (cardIndex) => {
-        const card = cards[cardIndex];
-        if (!card) return;
-
-        modalImg.src = card.image_url;
-        modalImg.onerror = () => { modalImg.src = "https://images.ygoprodeck.com/images/cards_cropped/46986414.jpg"; };
-        modalId.innerText = card.id;
-        modalType.innerText = card.type;
-        modalRace.innerText = card.race;
-        modalAttr.innerText = card.attribute;
-
-        if (card.level > 0) {
-          modalLevelBlock.classList.remove("hidden");
-          modalLevel.innerText = card.level;
-        } else {
-          modalLevelBlock.classList.add("hidden");
-        }
-
-        modalTitle.innerText = card.name;
-        modalDesc.innerText = card.desc;
-
-        const isMonster = !card.type.toLowerCase().includes("spell") && !card.type.toLowerCase().includes("trap");
-        if (isMonster) {
-          modalStatsBlock.classList.remove("hidden");
-          modalAtk.innerText = `${card.atk} ATK`;
-          modalDef.innerText = `${card.def} DEF`;
-        } else {
-          modalStatsBlock.classList.add("hidden");
-        }
-
-        if (card.points > 0) {
-          modalPointsBadge.className = "px-3 py-1 font-mono text-xs font-black uppercase tracking-wider bg-[#D02020] text-white border-2 border-black";
-          modalPointsBadge.innerText = `${card.points} POINTS`;
-          modalPointsText.innerHTML = `This card has an official Genesys deck build value of <strong>${card.points} points</strong>.`;
-        } else {
-          modalPointsBadge.className = "px-3 py-1 font-mono text-xs font-black uppercase tracking-wider bg-white text-black border-2 border-black";
-          modalPointsBadge.innerText = "0 POINTS (FREE)";
-          modalPointsText.innerHTML = `This card has a cost of <strong>0 points (FREE)</strong>.`;
-        }
-
-        modal.classList.remove("hidden");
-        document.body.classList.add("overflow-hidden");
-      }
-
-      function closeModal() {
-        modal.classList.add("hidden");
-        document.body.classList.remove("overflow-hidden");
-      }
-
-      init();
-    </script>
+    <script type="module" src="app.js"></script>
   </body>
 </html>

@@ -1,0 +1,2 @@
+announcement ID: 1
+announcement: [We've rolled out several search improvements! Monster Type, Attribute, and Card Type filters now support multi-select — mix and match any combination you need. New: Pendulum Scale bounds let you narrow down Pendulum monsters precisely. Logic Gate filters have also been upgraded with NOT gates for more powerful description searches. Thanks for using the tool!]
