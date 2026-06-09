@@ -3,6 +3,7 @@
 // ============================================================
 
 export const GENESYS_POINTS_DICT = {
+  "K9-ØØ Lupis": 5,
   "\"A Case for K9\"": 20,
   "Abyss Dweller": 100,
   "Adamancipator Risen - Dragite": 20,
